@@ -4,6 +4,25 @@ import * as XLSX from 'xlsx';
 export const SET_EXCEL_DATA = 'SET_EXCEL_DATA';
 export const SET_CSV_DATA = 'SET_CSV_DATA';
 
+// Unique Room Entries Mapping
+const roomMappings = {
+    "ascot": ['Duplex Suite', 'D3D', 'DOUBLE doubl', 'Single room', 'Standard Sin', '0T', 'DOUBLE DOUBL', 'Standard Dou', 'E1', 'D3', 'D4D', '02', 'D2D', 'SINGLE singl', 'Triple Room', 'Single Room', 'Double or Tw', 'D2', 'D2G'],
+    "wide": ['W2B', 'W3D', 'Deluxe Singl', 'Design Doubl', 'Værelse med', '1X', 'Executive Ro', 'Single room', 'Deluxe-enkel', '42', 'D7', 'DOUBLE Doubl', 'WIDE Deluxe', 'Signature Ro', 'Executive-su', 'W4B', 'WE1'],
+    "57house": ['Dobbeltværel', 'Expedia Room', 'Classic Doub', 'Enkeltværels', 'Classic Sing', 'Deluxe-værel', 'Fiftyseven S'],
+    "hyper": ['Deluxe-suite', 'Hypernym Lux', 'Luxury Apart', 'Deluxe-lejli', 'APARTMENT Hy', 'Superior-lej', 'Standard Rat', 'Deluxe-studi', 'Luxury Studi', 'Superior Apa']
+};
+
+// Function to determine the property based on room name
+const determineProperty = (roomName) => {
+    if (typeof roomName !== 'string') return null;
+    const room = roomName.slice(0, 12);
+    if (roomMappings.ascot.includes(room)) return 'ascot';
+    if (roomMappings.wide.includes(room)) return 'wide';
+    if (roomMappings['57house'].includes(room)) return '57house';
+    if (roomMappings.hyper.includes(room)) return 'hyper';
+    return null;
+};
+
 // Action creators
 export const setExcelData = (data) => ({
     type: SET_EXCEL_DATA,
@@ -69,11 +88,13 @@ export const dropCsvFile = (file, fieldIndex) => (dispatch) => {
         const guestsIndex = header.indexOf('Guests');
         const adultsIndex = header.indexOf('Adults');
 
-        // Extract the required columns
+        // Extract the required columns and add the property key
         const filteredData = jsonData.slice(1).map(row => {
+            const roomValue = row[roomIndex] || '';
+            const property = determineProperty(roomValue);
+
             const bookingReference = row[bookingRefIndex];
             const cancelledAt = row[cancelledAtIndex];
-            const room = row[roomIndex];
             const checkIn = row[checkInIndex];
             const guests = row[guestsIndex];
             const adults = row[adultsIndex];
@@ -84,10 +105,11 @@ export const dropCsvFile = (file, fieldIndex) => (dispatch) => {
             return {
                 bookingReference: bookingReference,
                 cancelledAt: formatDate(cancelledAt),
-                room: room,
+                room: roomValue,
                 checkIn: formatDate(checkIn),
                 guests: guests,
-                adults: adults
+                adults: adults,
+                property: property
             };
         });
 
