@@ -1,6 +1,9 @@
 import { connect } from 'react-redux';
 import StatusBar from '../components/StatusBar';
+import { resetCsvData } from '../actions/statusBarActions';
 
-// Currently, no mapStateToProps or mapDispatchToProps is needed.
-// But these can be added later as needed.
-export default connect(null, null)(StatusBar);
+const mapDispatchToProps = (dispatch) => ({
+    resetCsvData: (fieldIndex) => dispatch(resetCsvData(fieldIndex))
+});
+
+export default connect(null, mapDispatchToProps)(StatusBar);

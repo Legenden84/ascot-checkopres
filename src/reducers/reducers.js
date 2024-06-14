@@ -1,9 +1,10 @@
 import { SET_CSV_DATA, SET_EXCEL_DATA } from "../actions/importExcelCsvActions";
+import { RESET_CSV_DATA } from "../actions/statusBarActions";
 
 const initialState = {
     excelData: {
         date: '',
-        entries: [], // Changed from separate arrays to a single array of objects
+        entries: [],
     },
     csvData: {
         field1: [],
@@ -31,7 +32,6 @@ const calculateMajorityProperty = (data) => {
 };
 
 const rootReducer = (state = initialState, action) => {
-    console.log('Reducer received action:', action); // Add this line to debug
     switch (action.type) {
         case SET_EXCEL_DATA:
             return {
@@ -45,7 +45,6 @@ const rootReducer = (state = initialState, action) => {
             const updatedCsvData = { ...state.csvData };
             updatedCsvData[`field${action.payload.fieldIndex}`] = action.payload.data;
 
-            // Calculate the majority property for each field
             const property1 = calculateMajorityProperty(updatedCsvData.field1);
             const property2 = calculateMajorityProperty(updatedCsvData.field2);
             const property3 = calculateMajorityProperty(updatedCsvData.field3);
@@ -58,6 +57,20 @@ const rootReducer = (state = initialState, action) => {
                 property2,
                 property3,
                 property4
+            };
+        case RESET_CSV_DATA:
+            const resetFieldIndex = `field${action.payload.fieldIndex}`;
+            const resetCsvData = {
+                ...state.csvData,
+                [resetFieldIndex]: []
+            };
+            return {
+                ...state,
+                csvData: resetCsvData,
+                property1: resetFieldIndex === 'field1' ? null : state.property1,
+                property2: resetFieldIndex === 'field2' ? null : state.property2,
+                property3: resetFieldIndex === 'field3' ? null : state.property3,
+                property4: resetFieldIndex === 'field4' ? null : state.property4
             };
         default:
             return state;
