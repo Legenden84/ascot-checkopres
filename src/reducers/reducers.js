@@ -5,7 +5,12 @@ const initialState = {
         date: '',
         entries: [], // Changed from separate arrays to a single array of objects
     },
-    csvData: null,
+    csvData: {
+        field1: [],
+        field2: [],
+        field3: [],
+        field4: []
+    }
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -20,9 +25,11 @@ const rootReducer = (state = initialState, action) => {
                 },
             };
         case SET_CSV_DATA:
+            const updatedCsvData = { ...state.csvData };
+            updatedCsvData[`field${action.payload.fieldIndex}`] = action.payload.data;
             return {
                 ...state,
-                csvData: action.payload,
+                csvData: updatedCsvData,
             };
         default:
             return state;
