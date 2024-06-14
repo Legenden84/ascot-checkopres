@@ -3,8 +3,7 @@ import { SET_CSV_DATA, SET_EXCEL_DATA } from "../actions/importExcelCsvActions";
 const initialState = {
     excelData: {
         date: '',
-        name: [],
-        adults: [],
+        entries: [], // Changed from separate arrays to a single array of objects
     },
     csvData: null,
 };
@@ -17,8 +16,7 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 excelData: {
                     date: action.payload.date,
-                    name: action.payload.name,
-                    adults: action.payload.adults,
+                    entries: action.payload.entries,
                 },
             };
         case SET_CSV_DATA:

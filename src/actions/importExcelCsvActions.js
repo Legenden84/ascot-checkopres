@@ -23,23 +23,29 @@ export const dropExcelFile = (file) => (dispatch) => {
     const sheetName = workbook.SheetNames[0];
     const worksheet = workbook.Sheets[sheetName];
 
-    const cellA3 = worksheet['A3'];
-    const dateSerial = cellA3 ? cellA3.v : null;
+    const cellA4 = worksheet['A4'];
+    const dateSerial = cellA4 ? cellA4.v : null;
     const formattedDate = dateSerial ? parseExcelDate(dateSerial) : null;
 
-    const nameColumn = [];
-    const adultsColumn = [];
+    const entries = [];
     const sheetData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-    for (let i = 3; i < sheetData.length; i++) {
+    for (let i = 3; i < sheetData.length; i++) { // Start from row 4 (index 3)
       const row = sheetData[i];
-      nameColumn.push(row[2] || '');
-      adultsColumn.push(row[9] || '');
+      const name = row[2] || '';
+      const nameParts = splitName(name);
+      const adults = row[9] || '';
+      const group = row[5] || '';
+      entries.push({
+        firstname: nameParts.firstname,
+        lastname: nameParts.lastname,
+        adults: adults,
+        group: group
+      });
     }
 
     dispatch(setExcelData({
       date: formattedDate,
-      name: nameColumn,
-      adults: adultsColumn,
+      entries: entries,
     }));
   };
   reader.readAsArrayBuffer(file);
@@ -54,4 +60,19 @@ function parseExcelDate(excelSerialDate) {
     return `${year}-${month}-${day}`;
   }
   return null;
+}
+
+function splitName(name) {
+  const cleanedName = name.replace(/,/g, '').trim();
+  const parts = cleanedName.split(' ');
+
+  if (name.includes(',')) {
+    const lastName = parts[0];
+    const firstName = parts.slice(1).join(' ');
+    return { firstname: firstName, lastname: lastName };
+  } else {
+    const lastName = parts.pop();
+    const firstName = parts.join(' ');
+    return { firstname: firstName, lastname: lastName };
+  }
 }
