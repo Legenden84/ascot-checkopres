@@ -99,9 +99,6 @@ export const dropCsvFile = (file, fieldIndex) => (dispatch) => {
             const guests = row[guestsIndex];
             const adults = row[adultsIndex];
 
-            console.log('Raw Cancelled At:', cancelledAt);
-            console.log('Raw Check In:', checkIn);
-
             return {
                 bookingReference: bookingReference,
                 cancelledAt: formatDate(cancelledAt),
