@@ -2,6 +2,13 @@ import { connect } from 'react-redux';
 import FileDropzone from '../components/FileDropzone';
 import { dropExcelFile, dropCsvFile } from '../actions/importExcelCsvActions';
 
+const mapStateToProps = (state, ownProps) => {
+    const propertyKey = `property${ownProps.fieldIndex}`;
+    return {
+        property: state[propertyKey]
+    };
+};
+
 const mapDispatchToProps = (dispatch, ownProps) => ({
     onDrop: (file) => {
         if (ownProps.fileType === 'csv') {
@@ -12,6 +19,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     },
 });
 
-const FileDropzoneContainer = connect(null, mapDispatchToProps)(FileDropzone);
-
-export default FileDropzoneContainer;
+export default connect(mapStateToProps, mapDispatchToProps)(FileDropzone);

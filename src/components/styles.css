@@ -1,0 +1,32 @@
+.dropzone {
+    border: 2px dashed #ccc;
+    padding: 10px;
+    text-align: center;
+    height: 100px;
+    width: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.status-bar {
+    background: #eee;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.status-bar-section {
+    text-align: center;
+    width: 18%;
+}
+
+.status-bar-buttons {
+    margin-top: 10px;
+}
+
+.dropzone-text {
+    margin: 0;
+}

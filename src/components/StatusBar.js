@@ -7,19 +7,23 @@ class StatusBar extends Component {
 
     render() {
         return (
-            <div style={{ background: '#eee', padding: '10px', borderBottom: '1px solid #ccc', display: 'flex', justifyContent: 'space-around' }}>
-                {[1, 2, 3, 4].map(fieldIndex => (
-                    <div key={fieldIndex} style={{ textAlign: 'center' }}>
+            <div style={{ background: '#eee', padding: '10px', borderBottom: '1px solid #ccc' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+                    {[1, 2, 3, 4].map(fieldIndex => (
+                        <div key={fieldIndex} style={{ textAlign: 'center', width: '18%' }}>
+                            <div id={`dropzone${fieldIndex}`} style={{ marginBottom: '10px' }}></div>
+                            <div style={{ marginBottom: '10px' }}>
+                                <button onClick={() => this.handleReset(fieldIndex)}>Reset</button>
+                                <button>Placeholder</button>
+                            </div>
+                        </div>
+                    ))}
+                    <div style={{ textAlign: 'center', width: '18%' }}>
+                        <div id="dropzone5" style={{ marginBottom: '10px' }}></div>
                         <div style={{ marginBottom: '10px' }}>
-                            <button onClick={() => this.handleReset(fieldIndex)}>Reset</button>
+                            <button>Placeholder</button>
                             <button>Placeholder</button>
                         </div>
-                    </div>
-                ))}
-                <div style={{ textAlign: 'center' }}>
-                    <div style={{ marginBottom: '10px' }}>
-                        <button>Placeholder</button>
-                        <button>Placeholder</button>
                     </div>
                 </div>
             </div>
