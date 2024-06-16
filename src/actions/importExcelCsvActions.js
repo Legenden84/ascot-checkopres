@@ -48,20 +48,20 @@ export const dropExcelFile = (file) => (dispatch) => {
 
         const entries = [];
         const sheetData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-        for (let i = 3; i < sheetData.length; i++) { // Start from row 4 (index 3)
+        for (let i = 3; i < sheetData.length; i++) {
             const row = sheetData[i];
             const name = row[2] || '';
             const nameParts = splitName(name);
             const adults = row[9] || '';
             const group = row[5] || '';
-            const checkOut = adjustCheckOutDate(formattedDate, row[11]); // Adjust checkOut date if necessary
+            const checkOut = adjustCheckOutDate(formattedDate, row[11]);
             entries.push({
                 firstname: nameParts.firstname,
                 lastname: nameParts.lastname,
                 adults: adults,
                 group: group,
-                checkIn: formattedDate, // Add checkIn key with formattedDate value
-                checkOut: checkOut // Add checkOut key with adjusted value from L column
+                checkIn: formattedDate,
+                checkOut: checkOut
             });
         }
 
@@ -112,7 +112,8 @@ export const dropCsvFile = (file, fieldIndex) => (dispatch) => {
                 checkOut: formatDate(checkOut),
                 guests: guests,
                 adults: adults,
-                property: property
+                property: property,
+                checked: false
             };
         });
 
@@ -154,7 +155,7 @@ function formatDate(dateStr) {
         const date = new Date(dateStr);
         if (!isNaN(date.getTime())) {
             const day = String(date.getDate()).padStart(2, '0');
-            const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+            const month = String(date.getMonth() + 1).padStart(2, '0');
             const year = date.getFullYear();
             return `${day}-${month}-${year}`;
         }
