@@ -12,10 +12,12 @@ const initialState = {
         field3: [],
         field4: []
     },
-    property1: null,
-    property2: null,
-    property3: null,
-    property4: null
+    properties: {
+        property1: null,
+        property2: null,
+        property3: null,
+        property4: null
+    }
 };
 
 // Helper function to calculate the majority property
@@ -53,10 +55,12 @@ const rootReducer = (state = initialState, action) => {
             return {
                 ...state,
                 csvData: updatedCsvData,
-                property1,
-                property2,
-                property3,
-                property4
+                properties: {
+                    property1,
+                    property2,
+                    property3,
+                    property4
+                }
             };
         case RESET_CSV_DATA:
             const resetFieldIndex = `field${action.payload.fieldIndex}`;
@@ -67,10 +71,10 @@ const rootReducer = (state = initialState, action) => {
             return {
                 ...state,
                 csvData: resetCsvData,
-                property1: resetFieldIndex === 'field1' ? null : state.property1,
-                property2: resetFieldIndex === 'field2' ? null : state.property2,
-                property3: resetFieldIndex === 'field3' ? null : state.property3,
-                property4: resetFieldIndex === 'field4' ? null : state.property4
+                properties: {
+                    ...state.properties,
+                    [`property${action.payload.fieldIndex}`]: null
+                }
             };
         default:
             return state;

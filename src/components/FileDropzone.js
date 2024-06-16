@@ -11,7 +11,7 @@ class FileDropzone extends Component {
     };
 
     render() {
-        const { fileType, property } = this.props;
+        const { fileType, property, date } = this.props;
         const acceptMimeType = fileType === 'csv'
             ? { 'text/*': ['.csv'] }
             : { 'application/vnd.ms-excel': ['.xls'], 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['.xlsx'] };
@@ -44,7 +44,10 @@ class FileDropzone extends Component {
                 {({ getRootProps, getInputProps }) => (
                     <div {...getRootProps({ style: dropzoneStyle })}>
                         <input {...getInputProps()} />
-                        <p style={textStyle}>{property || `Drag 'n' drop a ${fileType.toUpperCase()} file here, or click to select one`}</p>
+                        <p style={textStyle}>
+                            {fileType === 'excel' ? (date || `Drag 'n' drop an ${fileType.toUpperCase()} file here, or click to select one`) 
+                            : (property || `Drag 'n' drop a ${fileType.toUpperCase()} file here, or click to select one`)}
+                        </p>
                     </div>
                 )}
             </Dropzone>

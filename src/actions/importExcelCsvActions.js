@@ -54,11 +54,14 @@ export const dropExcelFile = (file) => (dispatch) => {
             const nameParts = splitName(name);
             const adults = row[9] || '';
             const group = row[5] || '';
+            const checkOut = adjustCheckOutDate(formattedDate, row[11]); // Adjust checkOut date if necessary
             entries.push({
                 firstname: nameParts.firstname,
                 lastname: nameParts.lastname,
                 adults: adults,
-                group: group
+                group: group,
+                checkIn: formattedDate, // Add checkIn key with formattedDate value
+                checkOut: checkOut // Add checkOut key with adjusted value from L column
             });
         }
 
@@ -85,6 +88,7 @@ export const dropCsvFile = (file, fieldIndex) => (dispatch) => {
         const cancelledAtIndex = header.indexOf('Cancelled At');
         const roomIndex = header.indexOf('Room');
         const checkInIndex = header.indexOf('Check - In');
+        const checkOutIndex = header.indexOf('Check - Out');
         const guestsIndex = header.indexOf('Guests');
         const adultsIndex = header.indexOf('Adults');
 
@@ -96,6 +100,7 @@ export const dropCsvFile = (file, fieldIndex) => (dispatch) => {
             const bookingReference = row[bookingRefIndex];
             const cancelledAt = row[cancelledAtIndex];
             const checkIn = row[checkInIndex];
+            const checkOut = row[checkOutIndex];
             const guests = row[guestsIndex];
             const adults = row[adultsIndex];
 
@@ -104,6 +109,7 @@ export const dropCsvFile = (file, fieldIndex) => (dispatch) => {
                 cancelledAt: formatDate(cancelledAt),
                 room: roomValue,
                 checkIn: formatDate(checkIn),
+                checkOut: formatDate(checkOut),
                 guests: guests,
                 adults: adults,
                 property: property
@@ -114,6 +120,22 @@ export const dropCsvFile = (file, fieldIndex) => (dispatch) => {
     };
     reader.readAsBinaryString(file);
 };
+
+function adjustCheckOutDate(checkIn, checkOutStr) {
+    let checkOutDate = formatDate(checkOutStr);
+    if (!checkIn || !checkOutDate) return '';
+
+    const checkInDate = new Date(checkIn.split('-').reverse().join('-'));
+    let parsedCheckOutDate = new Date(checkOutDate.split('-').reverse().join('-'));
+
+    // If checkOut date is before checkIn date, add 1 to the year
+    if (parsedCheckOutDate < checkInDate) {
+        parsedCheckOutDate.setFullYear(parsedCheckOutDate.getFullYear() + 1);
+        checkOutDate = formatDate(parsedCheckOutDate.toISOString().split('T')[0]);
+    }
+
+    return checkOutDate;
+}
 
 function formatDate(dateStr) {
     if (!dateStr) return '';
