@@ -61,7 +61,8 @@ export const dropExcelFile = (file) => (dispatch) => {
                 adults: adults,
                 group: group,
                 checkIn: formattedDate,
-                checkOut: checkOut
+                checkOut: checkOut,
+                checked: false
             });
         }
 
