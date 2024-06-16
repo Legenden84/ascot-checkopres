@@ -104,6 +104,7 @@ export const dropCsvFile = (file, fieldIndex) => (dispatch) => {
             const checkOut = row[checkOutIndex];
             const guests = row[guestsIndex];
             const adults = row[adultsIndex];
+            const nameParts = splitName(guests);
 
             return {
                 bookingReference: bookingReference,
@@ -114,6 +115,8 @@ export const dropCsvFile = (file, fieldIndex) => (dispatch) => {
                 guests: guests,
                 adults: adults,
                 property: property,
+                firstname: nameParts.firstname,
+                lastname: nameParts.lastname,
                 checked: false
             };
         });
