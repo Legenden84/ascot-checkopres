@@ -5,20 +5,38 @@ class StatusBar extends Component {
         this.props.resetCsvData(fieldIndex);
     }
 
+    handleResetReduxStore = () => {
+        this.props.resetReduxStore(); // Dispatch the action to reset the entire state
+    }
     render() {
+
+        const buttonStyle = {
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+        };
+
+        const statusBarStyle = {
+            background: '#eee',
+            padding: '10px',
+            borderBottom: '1px solid #ccc',
+            display: 'flex',
+            justifyContent: 'space-around',
+        };
+
         return (
-            <div style={{ background: '#eee', padding: '10px', borderBottom: '1px solid #ccc', display: 'flex', justifyContent: 'space-around' }}>
+            <div style={statusBarStyle}>
                 {[1, 2, 3, 4].map(fieldIndex => (
-                    <div key={fieldIndex} style={{ textAlign: 'center' }}>
-                        <div style={{ marginBottom: '10px' }}>
+                    <div key={fieldIndex} style={buttonStyle}>
+                        <div>
                             <button onClick={() => this.handleReset(fieldIndex)}>Reset</button>
                             <button>Placeholder</button>
                         </div>
                     </div>
                 ))}
-                <div style={{ textAlign: 'center' }}>
-                    <div style={{ marginBottom: '10px' }}>
-                        <button>Placeholder</button>
+                <div style={buttonStyle}>
+                    <div>
+                        <button onClick={this.handleResetReduxStore}>Reset Redux Store</button>
                         <button>Placeholder</button>
                     </div>
                 </div>

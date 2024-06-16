@@ -1,3 +1,26 @@
+.dropzone {
+    border: 2px dashed #ccc;
+    padding: 10px;
+    text-align: center;
+    height: 100px; /* Fixed height */
+    width: 250px; /* Fixed width */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    overflow: hidden; /* Ensure content overflow does not affect size */
+    background-color: #333;
+    color: #fff;
+}
+
+.dropzone p {
+    margin: 0;
+    white-space: normal; /* Allow text to wrap */
+    word-wrap: break-word; /* Break long words */
+    text-align: center;
+    width: 100%;
+}
+
 .status-bar {
     background: #eee;
     padding: 10px;
@@ -9,13 +32,15 @@
 
 .status-bar-section {
     text-align: center;
-    width: 18%;
+    width: 250px; /* Match the width of the dropzone */
 }
 
 .status-bar-buttons {
     margin-top: 10px;
+    display: flex;
+    justify-content: center;
 }
 
-.dropzone-text {
-    margin: 0;
+.status-bar-buttons button {
+    margin: 0 5px; /* Add some spacing between buttons */
 }

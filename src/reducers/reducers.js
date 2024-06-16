@@ -1,5 +1,5 @@
 import { SET_CSV_DATA, SET_EXCEL_DATA } from "../actions/importExcelCsvActions";
-import { RESET_CSV_DATA } from "../actions/statusBarActions";
+import { RESET_CSV_DATA, RESET_REDUX_STORE } from "../actions/statusBarActions";
 
 const initialState = {
     excelData: {
@@ -76,6 +76,8 @@ const rootReducer = (state = initialState, action) => {
                     [`property${action.payload.fieldIndex}`]: null
                 }
             };
+        case RESET_REDUX_STORE:
+            return initialState;
         default:
             return state;
     }
