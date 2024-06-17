@@ -45,8 +45,8 @@ class FileDropzone extends Component {
                     <div {...getRootProps({ style: dropzoneStyle })}>
                         <input {...getInputProps()} />
                         <p style={textStyle}>
-                            {fileType === 'excel' ? (date || `Drag 'n' drop an ${fileType.toUpperCase()} file here, or click to select one`) 
-                            : (property || `Drag 'n' drop a ${fileType.toUpperCase()} file here, or click to select one`)}
+                            {fileType === 'excel' ? (date || `Åben Spectra AnkomstListe (${fileType.toUpperCase()}).`) 
+                            : (property || `Åben SiteMinder fil (${fileType.toUpperCase()}).`)}
                         </p>
                     </div>
                 )}
