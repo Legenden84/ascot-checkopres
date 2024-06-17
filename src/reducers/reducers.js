@@ -1,4 +1,5 @@
 import { SET_CSV_DATA, SET_EXCEL_DATA } from "../actions/importExcelCsvActions";
+import { UPDATE_CHECKED_STATUS } from "../actions/mainWindowActions";
 import { RESET_CSV_DATA, RESET_REDUX_STORE } from "../actions/statusBarActions";
 
 const initialState = {
@@ -47,19 +48,26 @@ const rootReducer = (state = initialState, action) => {
             const updatedCsvData = { ...state.csvData };
             updatedCsvData[`field${action.payload.fieldIndex}`] = action.payload.data;
 
-            const property1 = calculateMajorityProperty(updatedCsvData.field1);
-            const property2 = calculateMajorityProperty(updatedCsvData.field2);
-            const property3 = calculateMajorityProperty(updatedCsvData.field3);
-            const property4 = calculateMajorityProperty(updatedCsvData.field4);
-
             return {
                 ...state,
                 csvData: updatedCsvData,
                 properties: {
-                    property1,
-                    property2,
-                    property3,
-                    property4
+                    property1: calculateMajorityProperty(updatedCsvData.field1),
+                    property2: calculateMajorityProperty(updatedCsvData.field2),
+                    property3: calculateMajorityProperty(updatedCsvData.field3),
+                    property4: calculateMajorityProperty(updatedCsvData.field4)
+                }
+            };
+        case UPDATE_CHECKED_STATUS:
+            const { field, index, checked } = action.payload;
+            const updatedField = state.csvData[field].map((row, idx) =>
+                idx === index ? { ...row, checked } : row
+            );
+            return {
+                ...state,
+                csvData: {
+                    ...state.csvData,
+                    [field]: updatedField
                 }
             };
         case RESET_CSV_DATA:

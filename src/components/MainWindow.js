@@ -1,71 +1,72 @@
 import React, { Component } from 'react';
-import { useTable } from 'react-table';
-
-const Table = ({ columns, data }) => {
-    const {
-        getTableProps,
-        getTableBodyProps,
-        headerGroups,
-        rows,
-        prepareRow
-    } = useTable({ columns, data });
-
-    return (
-        <table {...getTableProps()} style={{ width: '100%', borderCollapse: 'collapse' }}>
-            <thead>
-                {headerGroups.map(headerGroup => (
-                    <tr {...headerGroup.getHeaderGroupProps()}>
-                        {headerGroup.headers.map(column => (
-                            <th {...column.getHeaderProps()} style={{ border: '1px solid #ddd', padding: '8px' }}>{column.render('Header')}</th>
-                        ))}
-                    </tr>
-                ))}
-            </thead>
-            <tbody {...getTableBodyProps()}>
-                {rows.map(row => {
-                    prepareRow(row);
-                    return (
-                        <tr {...row.getRowProps()}>
-                            {row.cells.map(cell => (
-                                <td {...cell.getCellProps()} style={{ border: '1px solid #ddd', padding: '8px' }}>{cell.render('Cell')}</td>
-                            ))}
-                        </tr>
-                    );
-                })}
-            </tbody>
-        </table>
-    );
-};
+import './MainWindow.css';
 
 class MainWindow extends Component {
-    render() {
-        const { excelEntries = [], csvEntries = [[], [], [], []] } = this.props;
+    filterData = (data, date) => {
+        return data
+            .map((row, originalIndex) => ({ ...row, originalIndex }))
+            .filter(row => !row.cancelledAt && row.checkIn === date);
+    }
 
-        const columns = [
-            {
-                Header: 'Last Name',
-                accessor: 'lastname'
-            },
-            {
-                Header: 'First Name',
-                accessor: 'firstname'
-            }
-        ];
+    handleCheckboxChange = (originalIndex, isCsv, fieldIndex) => {
+        const { updateCheckedStatus } = this.props;
+        const field = `field${fieldIndex + 1}`;
+        return (event) => {
+            updateCheckedStatus(field, originalIndex, event.target.checked);
+        };
+    }
+
+    render() {
+        const { excelEntries = [], csvEntries = [], excelDate } = this.props;
+
+        const renderTable = (data, isCsv = false, fieldIndex = null) => (
+            <div className="table-container">
+                <table className="dense-table">
+                    <thead>
+                        <tr>
+                            {isCsv && <th className="table-header">Booking #</th>}
+                            <th className="table-header">Last Name</th>
+                            <th className="table-header">First Name</th>
+                            <th className="table-header checkin-header">Check-In</th>
+                            <th className="table-header checkout-header">Check-Out</th>
+                            <th className="table-header"></th>
+                            <th className="table-header">OK</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {data.map((row, index) => (
+                            <tr key={index}>
+                                {isCsv && <td className="table-cell">{row.bookingReference}</td>}
+                                <td className="table-cell">{row.lastname}</td>
+                                <td className="table-cell">{row.firstname}</td>
+                                <td className="table-cell checkin-cell">{row.checkIn}</td>
+                                <td className="table-cell checkout-cell">{row.checkOut}</td>
+                                <td className="table-cell">
+                                    <input 
+                                        type="checkbox" 
+                                        checked={row.checked} 
+                                        onChange={this.handleCheckboxChange(row.originalIndex, isCsv, fieldIndex)}
+                                    />
+                                </td>
+                                <td className={`table-cell ok-cell ${row.checked ? 'checked' : 'unchecked'}`}>
+                                    {row.checked ? '✔' : '✘'}
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        );
 
         return (
-            <div style={{ padding: '20px' }}>
-                <h2>Main Content</h2>
-                <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-                    <div>
-                        <h3>Excel Entries</h3>
-                        <Table columns={columns} data={excelEntries} />
+            <div className="main-window">
+                {csvEntries.map((csvData, index) => (
+                    <div key={index} className="table-wrapper">
+                        {renderTable(this.filterData(csvData, excelDate), true, index)}
                     </div>
-                    {csvEntries.map((csvData, index) => (
-                        <div key={index}>
-                            <h3>CSV Field {index + 1}</h3>
-                            <Table columns={columns} data={csvData} />
-                        </div>
-                    ))}
+                ))}
+                <div className="table-wrapper">
+                    {renderTable(excelEntries)}
                 </div>
             </div>
         );

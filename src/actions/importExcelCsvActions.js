@@ -180,6 +180,10 @@ function parseExcelDate(excelSerialDate) {
 }
 
 function splitName(name) {
+    if (!name || typeof name !== 'string') {
+        return { firstname: '', lastname: '' };
+    }
+    
     const cleanedName = name.replace(/,/g, '').trim();
     const parts = cleanedName.split(' ');
 
@@ -193,3 +197,4 @@ function splitName(name) {
         return { firstname: firstName, lastname: lastName };
     }
 }
+

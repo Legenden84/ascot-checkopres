@@ -21,7 +21,7 @@ class FileDropzone extends Component {
             padding: '10px',
             textAlign: 'center',
             height: '100px',
-            width: '250px',
+            width: '100%',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
