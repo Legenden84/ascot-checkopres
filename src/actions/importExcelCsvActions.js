@@ -113,7 +113,7 @@ export const dropCsvFile = (file, fieldIndex) => (dispatch) => {
                 property: property,
                 firstname: nameParts.firstname,
                 lastname: nameParts.lastname,
-                checked: false
+                checked: null
             };
         });
 
