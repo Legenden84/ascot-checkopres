@@ -1,4 +1,4 @@
-import { SET_CSV_DATA, SET_EXCEL_DATA } from "../actions/importExcelCsvActions";
+import { SET_EXCEL_DATA, SET_CSV_DATA } from "../actions/importExcelCsvActions";
 import { UPDATE_CHECKED_STATUS } from "../actions/mainWindowActions";
 import { RESET_CSV_DATA, RESET_REDUX_STORE } from "../actions/statusBarActions";
 
@@ -21,7 +21,7 @@ const initialState = {
     }
 };
 
-const calculateMajorityProperty = (data) => {
+const calculateMajorityProperty = (data = []) => {
     const propertyCount = data.reduce((acc, row) => {
         const property = row.property;
         if (property) {
@@ -58,17 +58,32 @@ const rootReducer = (state = initialState, action) => {
                 }
             };
         case UPDATE_CHECKED_STATUS:
-            const { field, index, checked } = action.payload;
-            const updatedField = state.csvData[field].map((row, idx) =>
-                idx === index ? { ...row, checked } : row
-            );
-            return {
-                ...state,
-                csvData: {
-                    ...state.csvData,
-                    [field]: updatedField
-                }
-            };
+            const { field, index, checked, fileType } = action.payload;
+
+            if (fileType === 'csv') {
+                const updatedField = (state.csvData[field] || []).map((row, idx) =>
+                    idx === index ? { ...row, checked } : row
+                );
+                return {
+                    ...state,
+                    csvData: {
+                        ...state.csvData,
+                        [field]: updatedField
+                    }
+                };
+            } else if (fileType === 'excel') {
+                const updatedEntries = state.excelData.entries.map((row, idx) =>
+                    idx === index ? { ...row, checked } : row
+                );
+                return {
+                    ...state,
+                    excelData: {
+                        ...state.excelData,
+                        entries: updatedEntries
+                    }
+                };
+            }
+            return state;
         case RESET_CSV_DATA:
             const resetFieldIndex = `field${action.payload.fieldIndex}`;
             const resetCsvData = {

@@ -3,7 +3,7 @@
     padding: 10px;
     text-align: center;
     height: 100px;
-    width: 250px;
+    width: 100%; /* Ensure dropzone takes full width of container */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -11,6 +11,12 @@
     overflow: hidden;
     background-color: #333;
     color: #fff;
+}
+
+.dropzone.disabled {
+    background-color: #666; /* Greyed out background for disabled */
+    color: #ccc; /* Greyed out text for disabled */
+    cursor: not-allowed;
 }
 
 .dropzone p {

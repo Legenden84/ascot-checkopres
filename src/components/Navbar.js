@@ -9,19 +9,19 @@ class Navbar extends Component {
             <div>
                 <nav className="navbar">
                     <div className="dropzone-container">
-                        <FileDropzoneContainer fileType="csv" fieldIndex="1" />
+                        <FileDropzoneContainer fileType="csv" fieldIndex={1} />
                     </div>
                     <div className="dropzone-container">
-                        <FileDropzoneContainer fileType="csv" fieldIndex="2" />
+                        <FileDropzoneContainer fileType="csv" fieldIndex={2} />
                     </div>
                     <div className="dropzone-container">
-                        <FileDropzoneContainer fileType="csv" fieldIndex="3" />
+                        <FileDropzoneContainer fileType="csv" fieldIndex={3} />
                     </div>
                     <div className="dropzone-container">
-                        <FileDropzoneContainer fileType="csv" fieldIndex="4" />
+                        <FileDropzoneContainer fileType="csv" fieldIndex={4} />
                     </div>
                     <div className="dropzone-container">
-                        <FileDropzoneContainer fileType="excel" />
+                        <FileDropzoneContainer fileType="excel" fieldIndex={5} />
                     </div>
                 </nav>
                 <StatusBarContainer />

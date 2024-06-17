@@ -1,0 +1,11 @@
+.group-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.dropzone-container {
+    width: 100%;
+    box-sizing: border-box;
+}

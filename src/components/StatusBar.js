@@ -1,44 +1,31 @@
 import React, { Component } from 'react';
 
 class StatusBar extends Component {
-    handleReset = (fieldIndex) => {
-        this.props.resetCsvData(fieldIndex);
+    handleReset = () => {
+        const { resetCsvData, fieldIndex } = this.props;
+        resetCsvData(fieldIndex);
     }
 
     handleResetReduxStore = () => {
         this.props.resetReduxStore();
     }
+
     render() {
-
-        const buttonStyle = {
-            width: '100%',
-            display: 'flex',
-            justifyContent: 'center',
-        };
-
-        const statusBarStyle = {
-            background: '#eee',
-            padding: '10px',
-            borderBottom: '1px solid #ccc',
-            display: 'flex',
-            justifyContent: 'space-around',
-        };
-
+        const { fileType } = this.props;
         return (
-            <div style={statusBarStyle}>
-                {[1, 2, 3, 4].map(fieldIndex => (
-                    <div key={fieldIndex} style={buttonStyle}>
-                        <div>
-                            <button onClick={() => this.handleReset(fieldIndex)}>Reset</button>
+            <div className="status-bar">
+                <div className="status-bar-buttons">
+                    {fileType === 'csv' ? (
+                        <>
+                            <button onClick={this.handleReset}>Reset</button>
                             <button>Placeholder</button>
-                        </div>
-                    </div>
-                ))}
-                <div style={buttonStyle}>
-                    <div>
-                        <button onClick={this.handleResetReduxStore}>Reset Redux Store</button>
-                        <button>Placeholder</button>
-                    </div>
+                        </>
+                    ) : (
+                        <>
+                            <button onClick={this.handleResetReduxStore}>Reset Redux Store</button>
+                            <button>Placeholder</button>
+                        </>
+                    )}
                 </div>
             </div>
         );
