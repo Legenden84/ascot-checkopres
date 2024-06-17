@@ -7,6 +7,6 @@
 }
 
 .dropzone-container {
-    width: calc(20% - 2px); /* Ensures five equal-width dropzones */
+    width: calc(20% - 2px);
     margin: 0 1px;
 }

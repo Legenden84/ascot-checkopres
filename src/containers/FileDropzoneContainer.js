@@ -5,12 +5,12 @@ import { dropExcelFile, dropCsvFile } from '../actions/importExcelCsvActions';
 const mapStateToProps = (state, ownProps) => {
     if (ownProps.fileType === 'excel') {
         return {
-            date: state.excelData.date // Pass the date from excelData for Excel dropzone
+            date: state.excelData.date
         };
     } else {
         const propertyKey = `property${ownProps.fieldIndex}`;
         return {
-            property: state.properties[propertyKey] // Pass the property for CSV dropzones
+            property: state.properties[propertyKey]
         };
     }
 };
@@ -25,6 +25,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     },
 });
 
-const FileDropzoneContainer = connect(mapStateToProps, mapDispatchToProps)(FileDropzone);
-
-export default FileDropzoneContainer;
+export default connect(mapStateToProps, mapDispatchToProps)(FileDropzone);

@@ -21,7 +21,6 @@ const initialState = {
     }
 };
 
-// Helper function to calculate the majority property
 const calculateMajorityProperty = (data) => {
     const propertyCount = data.reduce((acc, row) => {
         const property = row.property;

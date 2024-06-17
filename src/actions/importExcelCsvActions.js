@@ -1,10 +1,8 @@
 import * as XLSX from 'xlsx';
 
-// Define action types
 export const SET_EXCEL_DATA = 'SET_EXCEL_DATA';
 export const SET_CSV_DATA = 'SET_CSV_DATA';
 
-// Unique Room Entries Mapping
 const roomMappings = {
     "ascot": ['Duplex Suite', 'D3D', 'DOUBLE doubl', 'Single room', 'Standard Sin', '0T', 'DOUBLE DOUBL', 'Standard Dou', 'E1', 'D3', 'D4D', '02', 'D2D', 'SINGLE singl', 'Triple Room', 'Single Room', 'Double or Tw', 'D2', 'D2G'],
     "wide": ['W2B', 'W3D', 'Deluxe Singl', 'Design Doubl', 'Værelse med', '1X', 'Executive Ro', 'Single room', 'Deluxe-enkel', '42', 'D7', 'DOUBLE Doubl', 'WIDE Deluxe', 'Signature Ro', 'Executive-su', 'W4B', 'WE1'],
@@ -12,18 +10,6 @@ const roomMappings = {
     "hyper": ['Deluxe-suite', 'Hypernym Lux', 'Luxury Apart', 'Deluxe-lejli', 'APARTMENT Hy', 'Superior-lej', 'Standard Rat', 'Deluxe-studi', 'Luxury Studi', 'Superior Apa']
 };
 
-// Function to determine the property based on room name
-const determineProperty = (roomName) => {
-    if (typeof roomName !== 'string') return null;
-    const room = roomName.slice(0, 12);
-    if (roomMappings.ascot.includes(room)) return 'ascot';
-    if (roomMappings.wide.includes(room)) return 'wide';
-    if (roomMappings['57house'].includes(room)) return '57house';
-    if (roomMappings.hyper.includes(room)) return 'hyper';
-    return null;
-};
-
-// Action creators
 export const setExcelData = (data) => ({
     type: SET_EXCEL_DATA,
     payload: data,
@@ -33,6 +19,16 @@ export const setCsvData = (data, fieldIndex) => ({
     type: SET_CSV_DATA,
     payload: { data, fieldIndex },
 });
+
+const determineProperty = (roomName) => {
+    if (typeof roomName !== 'string') return null;
+    const room = roomName.slice(0, 12);
+    if (roomMappings.ascot.includes(room)) return 'ascot';
+    if (roomMappings.wide.includes(room)) return 'wide';
+    if (roomMappings['57house'].includes(room)) return '57house';
+    if (roomMappings.hyper.includes(room)) return 'hyper';
+    return null;
+};
 
 export const dropExcelFile = (file) => (dispatch) => {
     const reader = new FileReader();
@@ -197,4 +193,3 @@ function splitName(name) {
         return { firstname: firstName, lastname: lastName };
     }
 }
-

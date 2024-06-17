@@ -33,8 +33,8 @@ class FileDropzone extends Component {
 
         const textStyle = {
             margin: 0,
-            whiteSpace: 'normal',  // Allow text to wrap
-            wordWrap: 'break-word',  // Break long words
+            whiteSpace: 'normal',
+            wordWrap: 'break-word',
             textAlign: 'center',
             width: '100%'
         };

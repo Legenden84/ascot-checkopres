@@ -6,7 +6,7 @@ class StatusBar extends Component {
     }
 
     handleResetReduxStore = () => {
-        this.props.resetReduxStore(); // Dispatch the action to reset the entire state
+        this.props.resetReduxStore();
     }
     render() {
 

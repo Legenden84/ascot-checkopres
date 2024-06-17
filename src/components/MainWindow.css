@@ -11,47 +11,47 @@
 }
 
 .table-container {
-    width: 100%; /* Ensures the table fills the container */
+    width: 100%;
     margin: 0 1px;
 }
 
 .dense-table {
     width: 100%;
-    border-collapse: collapse; /* Ensures there is no space between table cells */
+    border-collapse: collapse;
 }
 
 .dense-table th, .dense-table td {
-    border: 1px solid #ddd; /* Optional: Add border for visual clarity */
-    padding: 0 4px; /* Padding for table cells */
-    font-size: 10px; /* Updated font size */
-    line-height: 1; /* Reduced line height */
-    height: 20px; /* Adjusted height for table cells */
+    border: 1px solid #ddd;
+    padding: 0 4px;
+    font-size: 10px;
+    line-height: 1;
+    height: 20px;
     text-align: left;
-    white-space: nowrap; /* Prevent text from wrapping */
-    overflow: hidden; /* Hide overflow text */
-    text-overflow: ellipsis; /* Add ellipsis for overflow text */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .table-header {
-    max-width: 100px; /* Adjust as needed for Booking #, Last Name, First Name */
-    background-color: #333; /* Inverse background color */
-    color: #fff; /* Inverse text color */
+    max-width: 100px;
+    background-color: #333;
+    color: #fff;
 }
 
 .checkin-header, .checkout-header {
-    width: 90px; /* Adjust width for date columns to fit DD-MM-YYYY */
-    background-color: #333; /* Inverse background color */
-    color: #fff; /* Inverse text color */
+    width: 90px;
+    background-color: #333;
+    color: #fff;
 }
 
 .table-cell {
-    max-width: 100px; /* Adjust as needed */
-    box-sizing: border-box; /* Ensure padding is included in the width calculation */
+    max-width: 100px;
+    box-sizing: border-box;
 }
 
 .checkin-cell, .checkout-cell {
-    width: 90px; /* Ensure the cells do not exceed the header width for dates */
-    box-sizing: border-box; /* Ensure padding is included in the width calculation */
+    width: 90px;
+    box-sizing: border-box;
 }
 
 .ok-cell.checked {
