@@ -26,7 +26,7 @@ class FileDropzone extends React.Component {
     }
 
     render() {
-        const { disabled } = this.props;
+        const { disabled, property, date } = this.props;
 
         return (
             <div
@@ -40,7 +40,7 @@ class FileDropzone extends React.Component {
                     onChange={this.handleChange}
                     disabled={disabled}
                 />
-                <p>Drag and drop a file here, or click to select a file.</p>
+                <p>{property || date || 'Drag and drop a file here, or click to select a file.'}</p>
             </div>
         );
     }
