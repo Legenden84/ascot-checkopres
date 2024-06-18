@@ -54,12 +54,14 @@ export const dropExcelFile = (file) => (dispatch) => {
             const row = sheetData[i];
             const name = row[2] || '';
             const nameParts = splitName(name);
+            const resNum = row[3] || '';
             const adults = row[9] || '';
             const group = row[5] || '';
             const checkOut = adjustCheckOutDate(formattedDate, row[11]);
             entries.push({
                 firstname: nameParts.firstname,
                 lastname: nameParts.lastname,
+                resNum: resNum,
                 adults: adults,
                 group: group,
                 checkIn: formattedDate,

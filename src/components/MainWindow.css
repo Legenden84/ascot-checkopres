@@ -77,3 +77,15 @@
     width: 110px;
     box-sizing: border-box;
 }
+
+/* New styles for the checkbox column */
+.checkbox-header {
+    min-width: 20px;
+    background-color: #333;
+    color: #fff;
+}
+
+.checkbox-cell {
+    min-width: 20px;
+    box-sizing: border-box;
+}

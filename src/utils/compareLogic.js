@@ -1,31 +1,32 @@
 // src/utils/compareLogic.js
 
-export const compareDataLogic = (excelData, filteredData) => {
+export const matchDateAndName = (excelData, filteredData) => {
     const updatedFilteredData = {};
+    const updatedExcelEntries = excelData.entries.map((excelRow) => {
+        let matched = false;
 
-    Object.keys(filteredData).forEach((fieldKey) => {
-        const fieldData = filteredData[fieldKey].map((csvRow) => {
-            if (csvRow.checked) return csvRow;
+        Object.keys(filteredData).forEach((fieldKey) => {
+            filteredData[fieldKey] = filteredData[fieldKey].map((csvRow) => {
+                if (csvRow.checked) return csvRow;
 
-            const matchingExcelRow = excelData.entries.find(
-                (excelRow) =>
+                if (
                     excelRow.checkIn === csvRow.checkIn &&
                     excelRow.checkOut === csvRow.checkOut &&
                     excelRow.firstname.trim() === csvRow.firstname.trim() &&
                     excelRow.lastname.trim() === csvRow.lastname.trim()
-            );
+                ) {
+                    matched = true;
+                    return { ...csvRow, checked: true };
+                }
 
-            if (matchingExcelRow) {
-                console.log(`Match found for ${csvRow.firstname} ${csvRow.lastname}`);
-                return { ...csvRow, checked: true };
-            }
+                return csvRow;
+            });
 
-            return csvRow;
+            updatedFilteredData[fieldKey] = filteredData[fieldKey];
         });
 
-        updatedFilteredData[fieldKey] = fieldData;
+        return matched ? { ...excelRow, checked: true } : excelRow;
     });
 
-    console.log('Updated filtered data:', updatedFilteredData);
-    return updatedFilteredData;
+    return { updatedFilteredData, updatedExcelEntries };
 };

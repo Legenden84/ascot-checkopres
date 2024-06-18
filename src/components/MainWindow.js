@@ -23,23 +23,25 @@ class MainWindow extends Component {
                 <thead>
                     <tr>
                         {fileType === 'csv' && <th className="table-header booking-header">Booking #</th>}
+                        {fileType === 'excel' && <th className="table-header resNum-header">Res. Nr.</th>}
                         <th className="table-header">Last Name</th>
                         <th className="table-header">First Name</th>
                         <th className="table-header checkin-header">Check-In</th>
                         <th className="table-header checkout-header">Check-Out</th>
-                        <th className="table-header"></th>
-                        <th className="table-header">OK</th>
+                        <th className="table-header checkbox-header"></th>
+                        <th className="table-header ok-header">OK</th>
                     </tr>
                 </thead>
                 <tbody>
                     {data.map((row, index) => (
                         <tr key={index}>
                             {fileType === 'csv' && <td className="table-cell booking-cell">{row.bookingReference}</td>}
+                            {fileType === 'excel' && <td className="table-cell resNum-cell">{row.resNum}</td>}
                             <td className="table-cell">{row.lastname}</td>
                             <td className="table-cell">{row.firstname}</td>
                             <td className="table-cell checkin-cell">{row.checkIn}</td>
                             <td className="table-cell checkout-cell">{row.checkOut}</td>
-                            <td className="table-cell">
+                            <td className="table-cell checkbox-cell">
                                 <input 
                                     type="checkbox" 
                                     checked={row.checked || false} 

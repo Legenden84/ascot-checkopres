@@ -126,7 +126,11 @@ const rootReducer = (state = initialState, action) => {
         case COMPARE_DATA:
             return {
                 ...state,
-                filteredData: action.payload,
+                filteredData: action.payload.updatedFilteredData,
+                excelData: {
+                    ...state.excelData,
+                    entries: action.payload.updatedExcelEntries,
+                }
             };
         default:
             return state;

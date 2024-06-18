@@ -1,6 +1,6 @@
 // src/actions/statusBarActions.js
 
-import { compareDataLogic } from '../utils/compareLogic';
+import { matchDateAndName } from '../utils/compareLogic';
 
 export const RESET_CSV_DATA = 'RESET_CSV_DATA';
 export const RESET_REDUX_STORE = 'RESET_REDUX_STORE';
@@ -19,14 +19,10 @@ export const compareData = () => (dispatch, getState) => {
     const state = getState();
     const { excelData, filteredData } = state;
 
-    console.log('Current state before comparison:', state);
-
-    const updatedFilteredData = compareDataLogic(excelData, filteredData);
-
-    console.log('Dispatching COMPARE_DATA action with payload:', updatedFilteredData);
+    const { updatedFilteredData, updatedExcelEntries } = matchDateAndName(excelData, filteredData);
 
     dispatch({
         type: COMPARE_DATA,
-        payload: updatedFilteredData,
+        payload: { updatedFilteredData, updatedExcelEntries },
     });
 };
