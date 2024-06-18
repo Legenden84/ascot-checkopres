@@ -2,7 +2,7 @@
 
 import { SET_EXCEL_DATA, SET_CSV_DATA } from "../actions/importExcelCsvActions";
 import { UPDATE_EXCEL_CHECKED_STATUS, UPDATE_CSV_CHECKED_STATUS, SAVE_FILTERED_DATA } from "../actions/mainWindowActions";
-import { RESET_CSV_DATA, RESET_REDUX_STORE } from "../actions/statusBarActions";
+import { RESET_CSV_DATA, RESET_REDUX_STORE, COMPARE_DATA } from "../actions/statusBarActions";
 
 const initialState = {
     excelData: {
@@ -30,7 +30,7 @@ const initialState = {
         field4: [],
         field5: [],
     },
-    isExcelFileUploaded: false, // New flag to track Excel file upload
+    isExcelFileUploaded: false,
 };
 
 const calculateMajorityProperty = (data = []) => {
@@ -54,7 +54,7 @@ const rootReducer = (state = initialState, action) => {
                     date: action.payload.date,
                     entries: action.payload.entries,
                 },
-                isExcelFileUploaded: true, // Set flag to true when Excel file is uploaded
+                isExcelFileUploaded: true,
             };
         case SET_CSV_DATA:
             const updatedCsvData = { ...state.csvData };
@@ -96,12 +96,9 @@ const rootReducer = (state = initialState, action) => {
         case UPDATE_CSV_CHECKED_STATUS:
             const { field: csvField, index: csvIndex, checked: csvChecked } = action.payload;
 
-            // Update only filteredData
             const updatedFilteredField = state.filteredData[csvField].map((row, idx) =>
                 idx === csvIndex ? { ...row, checked: csvChecked } : row
             );
-
-            console.log('Updated Filtered Data:', updatedFilteredField);
 
             return {
                 ...state,
@@ -126,6 +123,11 @@ const rootReducer = (state = initialState, action) => {
             };
         case RESET_REDUX_STORE:
             return initialState;
+        case COMPARE_DATA:
+            return {
+                ...state,
+                filteredData: action.payload,
+            };
         default:
             return state;
     }

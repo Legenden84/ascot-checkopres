@@ -1,3 +1,5 @@
+// src/components/StatusBar.js
+
 import React, { Component } from 'react';
 
 class StatusBar extends Component {
@@ -8,6 +10,10 @@ class StatusBar extends Component {
 
     handleResetReduxStore = () => {
         this.props.resetReduxStore();
+    }
+
+    handleCompareData = () => {
+        this.props.compareData();
     }
 
     render() {
@@ -23,7 +29,7 @@ class StatusBar extends Component {
                     ) : (
                         <>
                             <button onClick={this.handleResetReduxStore}>Reset Redux Store</button>
-                            <button>Placeholder</button>
+                            <button onClick={this.handleCompareData}>Compare Data</button>
                         </>
                     )}
                 </div>
