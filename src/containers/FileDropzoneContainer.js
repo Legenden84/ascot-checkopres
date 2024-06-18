@@ -1,3 +1,5 @@
+// src/containers/FileDropzoneContainer.js
+
 import { connect } from 'react-redux';
 import FileDropzone from '../components/FileDropzone';
 import { dropExcelFile, dropCsvFile } from '../actions/importExcelCsvActions';
@@ -10,7 +12,8 @@ const mapStateToProps = (state, ownProps) => {
     } else {
         const propertyKey = `property${ownProps.fieldIndex}`;
         return {
-            property: state.properties[propertyKey]
+            property: state.properties[propertyKey],
+            isExcelFileUploaded: state.isExcelFileUploaded
         };
     }
 };
@@ -25,4 +28,11 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(FileDropzone);
+const mergeProps = (stateProps, dispatchProps, ownProps) => ({
+    ...ownProps,
+    ...stateProps,
+    ...dispatchProps,
+    disabled: ownProps.fileType === 'csv' && !stateProps.isExcelFileUploaded
+});
+
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(FileDropzone);

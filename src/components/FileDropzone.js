@@ -1,56 +1,47 @@
-import React, { Component } from 'react';
-import Dropzone from 'react-dropzone';
+// src/components/FileDropzone.js
 
-class FileDropzone extends Component {
-    onDrop = (acceptedFiles) => {
-        const { onDrop } = this.props;
+import React from 'react';
+import './FileDropzone.css';
 
-        acceptedFiles.forEach((file) => {
-            onDrop(file);
-        });
-    };
+class FileDropzone extends React.Component {
+    handleDrop = (event) => {
+        event.preventDefault();
+        const { onDrop, fieldIndex } = this.props;
+        const files = event.dataTransfer.files;
+        if (files.length) {
+            onDrop(files[0], fieldIndex);
+        }
+    }
+
+    handleDragOver = (event) => {
+        event.preventDefault();
+    }
+
+    handleChange = (event) => {
+        const { onDrop, fieldIndex } = this.props;
+        const files = event.target.files;
+        if (files.length) {
+            onDrop(files[0], fieldIndex);
+        }
+    }
 
     render() {
-        const { fileType, property, date } = this.props;
-        const acceptMimeType = fileType === 'csv'
-            ? { 'text/*': ['.csv'] }
-            : { 'application/vnd.ms-excel': ['.xls'], 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['.xlsx'] };
-
-        const dropzoneStyle = {
-            border: '2px dashed #ccc',
-            padding: '10px',
-            textAlign: 'center',
-            height: '100px',
-            width: '100%',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            overflow: 'hidden',
-            backgroundColor: '#333',
-            color: '#fff',
-            boxSizing: 'border-box'
-        };
-
-        const textStyle = {
-            margin: 0,
-            whiteSpace: 'normal',
-            wordWrap: 'break-word',
-            textAlign: 'center',
-            width: '100%'
-        };
+        const { disabled } = this.props;
 
         return (
-            <Dropzone onDrop={this.onDrop} accept={acceptMimeType}>
-                {({ getRootProps, getInputProps }) => (
-                    <div {...getRootProps({ style: dropzoneStyle })}>
-                        <input {...getInputProps()} />
-                        <p style={textStyle}>
-                            {fileType === 'excel' ? (date || `Åben Spectra AnkomstListe (${fileType.toUpperCase()}).`) 
-                            : (property || `Åben SiteMinder fil (${fileType.toUpperCase()}).`)}
-                        </p>
-                    </div>
-                )}
-            </Dropzone>
+            <div
+                className={`file-dropzone ${disabled ? 'disabled' : ''}`}
+                onDrop={this.handleDrop}
+                onDragOver={this.handleDragOver}
+            >
+                <input
+                    type="file"
+                    accept=".csv, .xlsx, .xls"
+                    onChange={this.handleChange}
+                    disabled={disabled}
+                />
+                <p>Drag and drop a file here, or click to select a file.</p>
+            </div>
         );
     }
 }

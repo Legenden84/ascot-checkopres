@@ -29,7 +29,8 @@ const initialState = {
         field3: [],
         field4: [],
         field5: [],
-    }
+    },
+    isExcelFileUploaded: false, // New flag to track Excel file upload
 };
 
 const calculateMajorityProperty = (data = []) => {
@@ -53,6 +54,7 @@ const rootReducer = (state = initialState, action) => {
                     date: action.payload.date,
                     entries: action.payload.entries,
                 },
+                isExcelFileUploaded: true, // Set flag to true when Excel file is uploaded
             };
         case SET_CSV_DATA:
             const updatedCsvData = { ...state.csvData };
@@ -94,6 +96,7 @@ const rootReducer = (state = initialState, action) => {
         case UPDATE_CSV_CHECKED_STATUS:
             const { field: csvField, index: csvIndex, checked: csvChecked } = action.payload;
 
+            // Update only filteredData
             const updatedFilteredField = state.filteredData[csvField].map((row, idx) =>
                 idx === csvIndex ? { ...row, checked: csvChecked } : row
             );

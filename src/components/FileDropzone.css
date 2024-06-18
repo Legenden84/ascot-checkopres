@@ -1,0 +1,35 @@
+/* src/components/FileDropzone.css */
+
+.file-dropzone {
+    border: 2px dashed #ccc;
+    padding: 10px;
+    text-align: center;
+    height: 100px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-color: #333;
+    color: #fff;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.file-dropzone.disabled {
+    background-color: #666;
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.file-dropzone input[type="file"] {
+    display: none;
+}
+
+.file-dropzone p {
+    margin: 0;
+    white-space: normal;
+    word-wrap: break-word;
+    text-align: center;
+    width: 100%;
+}
