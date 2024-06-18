@@ -1,20 +1,23 @@
+// src/containers/MainWindowContainer.js
+
 import { connect } from 'react-redux';
-import { updateCheckedStatus } from '../actions/mainWindowActions';
 import MainWindow from '../components/MainWindow';
+import { updateExcelCheckedStatus, updateCsvCheckedStatus } from '../actions/mainWindowActions';
 
 const mapStateToProps = (state, ownProps) => {
-    const fieldKey = `field${ownProps.fieldIndex}`;
+    const fieldIndex = ownProps.fieldIndex;
+    const fileType = ownProps.fileType;
+    const data = fileType === 'csv' ? state.filteredData[`field${fieldIndex}`] : state.excelData.entries;
     return {
-        excelEntries: state.excelData.entries || [],
-        csvEntries: state.csvData[fieldKey] || [],
-        excelDate: state.excelData.date || '',
-        fileType: ownProps.fileType,
-        fieldIndex: ownProps.fieldIndex
+        entries: data,
+        fieldIndex,
+        fileType,
     };
 };
 
-const mapDispatchToProps = (dispatch) => ({
-    updateCheckedStatus: (field, index, checked, fileType) => dispatch(updateCheckedStatus(field, index, checked, fileType))
-});
+const mapDispatchToProps = {
+    updateExcelCheckedStatus,
+    updateCsvCheckedStatus,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainWindow);

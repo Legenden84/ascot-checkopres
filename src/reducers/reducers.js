@@ -1,5 +1,7 @@
+// src/reducers/reducers.js
+
 import { SET_EXCEL_DATA, SET_CSV_DATA } from "../actions/importExcelCsvActions";
-import { UPDATE_CHECKED_STATUS } from "../actions/mainWindowActions";
+import { UPDATE_EXCEL_CHECKED_STATUS, UPDATE_CSV_CHECKED_STATUS, SAVE_FILTERED_DATA } from "../actions/mainWindowActions";
 import { RESET_CSV_DATA, RESET_REDUX_STORE } from "../actions/statusBarActions";
 
 const initialState = {
@@ -11,13 +13,22 @@ const initialState = {
         field1: [],
         field2: [],
         field3: [],
-        field4: []
+        field4: [],
+        field5: [],
     },
     properties: {
         property1: null,
         property2: null,
         property3: null,
-        property4: null
+        property4: null,
+        property5: null,
+    },
+    filteredData: {
+        field1: [],
+        field2: [],
+        field3: [],
+        field4: [],
+        field5: [],
     }
 };
 
@@ -54,36 +65,48 @@ const rootReducer = (state = initialState, action) => {
                     property1: calculateMajorityProperty(updatedCsvData.field1),
                     property2: calculateMajorityProperty(updatedCsvData.field2),
                     property3: calculateMajorityProperty(updatedCsvData.field3),
-                    property4: calculateMajorityProperty(updatedCsvData.field4)
+                    property4: calculateMajorityProperty(updatedCsvData.field4),
+                    property5: calculateMajorityProperty(updatedCsvData.field5),
                 }
             };
-        case UPDATE_CHECKED_STATUS:
-            const { field, index, checked, fileType } = action.payload;
+        case SAVE_FILTERED_DATA:
+            const updatedFilteredData = { ...state.filteredData };
+            updatedFilteredData[`field${action.payload.fieldIndex}`] = action.payload.data;
 
-            if (fileType === 'csv') {
-                const updatedField = (state.csvData[field] || []).map((row, idx) =>
-                    idx === index ? { ...row, checked } : row
-                );
-                return {
-                    ...state,
-                    csvData: {
-                        ...state.csvData,
-                        [field]: updatedField
-                    }
-                };
-            } else if (fileType === 'excel') {
-                const updatedEntries = state.excelData.entries.map((row, idx) =>
-                    idx === index ? { ...row, checked } : row
-                );
-                return {
-                    ...state,
-                    excelData: {
-                        ...state.excelData,
-                        entries: updatedEntries
-                    }
-                };
-            }
-            return state;
+            return {
+                ...state,
+                filteredData: updatedFilteredData
+            };
+        case UPDATE_EXCEL_CHECKED_STATUS:
+            const { index: excelIndex, checked: excelChecked } = action.payload;
+
+            const updatedExcelEntries = state.excelData.entries.map((row, idx) =>
+                idx === excelIndex ? { ...row, checked: excelChecked } : row
+            );
+
+            return {
+                ...state,
+                excelData: {
+                    ...state.excelData,
+                    entries: updatedExcelEntries
+                }
+            };
+        case UPDATE_CSV_CHECKED_STATUS:
+            const { field: csvField, index: csvIndex, checked: csvChecked } = action.payload;
+
+            const updatedFilteredField = state.filteredData[csvField].map((row, idx) =>
+                idx === csvIndex ? { ...row, checked: csvChecked } : row
+            );
+
+            console.log('Updated Filtered Data:', updatedFilteredField);
+
+            return {
+                ...state,
+                filteredData: {
+                    ...state.filteredData,
+                    [csvField]: updatedFilteredField
+                }
+            };
         case RESET_CSV_DATA:
             const resetFieldIndex = `field${action.payload.fieldIndex}`;
             const resetCsvData = {

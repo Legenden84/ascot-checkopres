@@ -1,27 +1,28 @@
+// src/components/MainWindow.js
+
 import React, { Component } from 'react';
 import './MainWindow.css';
 
 class MainWindow extends Component {
-    filterData = (data, date) => {
-        return data
-            .map((row, originalIndex) => ({ ...row, originalIndex }))
-            .filter(row => !row.cancelledAt && row.checkIn === date);
-    }
-
-    handleCheckboxChange = (originalIndex, fileType) => {
-        const { updateCheckedStatus, fieldIndex } = this.props;
+    handleCheckboxChange = (index, fileType) => {
+        const { updateExcelCheckedStatus, updateCsvCheckedStatus, fieldIndex } = this.props;
         const field = `field${fieldIndex}`;
         return (event) => {
-            updateCheckedStatus(field, originalIndex, event.target.checked, fileType);
+            const checked = event.target.checked;
+            if (fileType === 'excel') {
+                updateExcelCheckedStatus(field, index, checked);
+            } else if (fileType === 'csv') {
+                updateCsvCheckedStatus(field, index, checked);
+            }
         };
     }
 
-    renderCsvTable = (data) => (
+    renderTable = (data, fileType) => (
         <div className="table-container">
             <table className="dense-table">
                 <thead>
                     <tr>
-                        <th className="table-header">Booking #</th>
+                        {fileType === 'csv' && <th className="table-header booking-header">Booking #</th>}
                         <th className="table-header">Last Name</th>
                         <th className="table-header">First Name</th>
                         <th className="table-header checkin-header">Check-In</th>
@@ -33,7 +34,7 @@ class MainWindow extends Component {
                 <tbody>
                     {data.map((row, index) => (
                         <tr key={index}>
-                            <td className="table-cell">{row.bookingReference}</td>
+                            {fileType === 'csv' && <td className="table-cell booking-cell">{row.bookingReference}</td>}
                             <td className="table-cell">{row.lastname}</td>
                             <td className="table-cell">{row.firstname}</td>
                             <td className="table-cell checkin-cell">{row.checkIn}</td>
@@ -41,45 +42,8 @@ class MainWindow extends Component {
                             <td className="table-cell">
                                 <input 
                                     type="checkbox" 
-                                    checked={row.checked} 
-                                    onChange={this.handleCheckboxChange(row.originalIndex, 'csv')}
-                                />
-                            </td>
-                            <td className={`table-cell ok-cell ${row.checked ? 'checked' : 'unchecked'}`}>
-                                {row.checked ? '✔' : '✘'}
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
-    );
-
-    renderExcelTable = (data) => (
-        <div className="table-container">
-            <table className="dense-table">
-                <thead>
-                    <tr>
-                        <th className="table-header">Last Name</th>
-                        <th className="table-header">First Name</th>
-                        <th className="table-header checkin-header">Check-In</th>
-                        <th className="table-header checkout-header">Check-Out</th>
-                        <th className="table-header"></th>
-                        <th className="table-header">OK</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {data.map((row, index) => (
-                        <tr key={index}>
-                            <td className="table-cell">{row.lastname}</td>
-                            <td className="table-cell">{row.firstname}</td>
-                            <td className="table-cell checkin-cell">{row.checkIn}</td>
-                            <td className="table-cell checkout-cell">{row.checkOut}</td>
-                            <td className="table-cell">
-                                <input 
-                                    type="checkbox" 
-                                    checked={row.checked} 
-                                    onChange={this.handleCheckboxChange(index, 'excel')}
+                                    checked={row.checked || false} 
+                                    onChange={this.handleCheckboxChange(index, this.props.fileType)}
                                 />
                             </td>
                             <td className={`table-cell ok-cell ${row.checked ? 'checked' : 'unchecked'}`}>
@@ -93,15 +57,11 @@ class MainWindow extends Component {
     );
 
     render() {
-        const { excelEntries = [], csvEntries = [], excelDate, fileType } = this.props;
+        const { entries, fileType } = this.props;
 
         return (
             <div className="main-window">
-                {fileType === 'csv' ? (
-                    this.renderCsvTable(this.filterData(csvEntries, excelDate))
-                ) : (
-                    this.renderExcelTable(excelEntries)
-                )}
+                {this.renderTable(entries, fileType)}
             </div>
         );
     }

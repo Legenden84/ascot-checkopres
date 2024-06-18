@@ -1,0 +1,42 @@
+.
+├── README.md
+├── delete.json
+├── package-lock.json
+├── package.json
+├── public
+│   ├── favicon.ico
+│   ├── index.html
+│   ├── logo192.png
+│   ├── logo512.png
+│   ├── manifest.json
+│   └── robots.txt
+└── src
+    ├── App.css
+    ├── App.js
+    ├── actions
+    │   ├── importExcelCsvActions.js
+    │   ├── mainWindowActions.js
+    │   └── statusBarActions.js
+    ├── components
+    │   ├── FileDropzone.js
+    │   ├── GroupComponent.css
+    │   ├── GroupComponent.js
+    │   ├── MainWindow.css
+    │   ├── MainWindow.js
+    │   ├── Navbar.css
+    │   ├── Navbar.js
+    │   ├── StatusBar.js
+    │   └── styles.css
+    ├── containers
+    │   ├── FileDropzoneContainer.js
+    │   ├── MainWindowContainer.js
+    │   ├── NavbarContainer.js
+    │   └── StatusBarContainer.js
+    ├── index.css
+    ├── index.js
+    ├── reducers
+    │   └── reducers.js
+    └── store
+        └── index.js
+
+7 directories, 32 files

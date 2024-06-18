@@ -2,6 +2,7 @@ import * as XLSX from 'xlsx';
 
 export const SET_EXCEL_DATA = 'SET_EXCEL_DATA';
 export const SET_CSV_DATA = 'SET_CSV_DATA';
+export const SAVE_FILTERED_DATA = 'SAVE_FILTERED_DATA';
 
 const roomMappings = {
     "Ascot": ['Duplex Suite', 'D3D', 'DOUBLE doubl', 'Single room', 'Standard Sin', '0T', 'DOUBLE DOUBL', 'Standard Dou', 'E1', 'D3', 'D4D', '02', 'D2D', 'SINGLE singl', 'Triple Room', 'Single Room', 'Double or Tw', 'D2', 'D2G'],
@@ -18,6 +19,11 @@ export const setExcelData = (data) => ({
 export const setCsvData = (data, fieldIndex) => ({
     type: SET_CSV_DATA,
     payload: { data, fieldIndex },
+});
+
+export const saveFilteredData = (fieldIndex, data) => ({
+    type: SAVE_FILTERED_DATA,
+    payload: { fieldIndex, data }
 });
 
 const determineProperty = (roomName) => {
@@ -70,7 +76,7 @@ export const dropExcelFile = (file) => (dispatch) => {
     reader.readAsArrayBuffer(file);
 };
 
-export const dropCsvFile = (file, fieldIndex) => (dispatch) => {
+export const dropCsvFile = (file, fieldIndex) => (dispatch, getState) => {
     const reader = new FileReader();
     reader.onload = (event) => {
         const binaryStr = event.target.result;
@@ -118,6 +124,18 @@ export const dropCsvFile = (file, fieldIndex) => (dispatch) => {
         });
 
         dispatch(setCsvData(filteredData, fieldIndex));
+
+        // Get the current state to access the excel date
+        const state = getState();
+        const date = state.excelData.date;
+
+        // Filter data based on check-in date
+        const filteredEntries = filteredData
+            .map((row, originalIndex) => ({ ...row, originalIndex }))
+            .filter(row => !row.cancelledAt && row.checkIn === date)
+            .map(row => ({ ...row, checked: false }));
+
+        dispatch(saveFilteredData(fieldIndex, filteredEntries));
     };
     reader.readAsBinaryString(file);
 };
