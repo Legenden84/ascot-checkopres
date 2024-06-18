@@ -1,5 +1,3 @@
-// src/components/StatusBar.js
-
 import React, { Component } from 'react';
 
 class StatusBar extends Component {

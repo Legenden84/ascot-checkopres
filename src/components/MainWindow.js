@@ -1,5 +1,3 @@
-// src/components/MainWindow.js
-
 import React, { Component } from 'react';
 import './MainWindow.css';
 

@@ -2,10 +2,10 @@
   display: flex;
   width: 100%;
   box-sizing: border-box;
-  justify-content: space-between; /* Ensure spacing between containers */
+  justify-content: space-between;
 }
 
 .group-container {
   flex: 1;
-  margin: 0; /* Remove margin to ensure no space between dropzones */
+  margin: 0;
 }

@@ -1,5 +1,3 @@
-// src/containers/MainWindowContainer.js
-
 import { connect } from 'react-redux';
 import MainWindow from '../components/MainWindow';
 import { updateExcelCheckedStatus, updateCsvCheckedStatus } from '../actions/mainWindowActions';

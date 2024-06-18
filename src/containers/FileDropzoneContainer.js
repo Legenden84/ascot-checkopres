@@ -1,5 +1,3 @@
-// src/containers/FileDropzoneContainer.js
-
 import { connect } from 'react-redux';
 import FileDropzone from '../components/FileDropzone';
 import { dropExcelFile, dropCsvFile } from '../actions/importExcelCsvActions';
