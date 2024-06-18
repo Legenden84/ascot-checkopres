@@ -1,6 +1,4 @@
-// src/actions/statusBarActions.js
-
-import { matchDateAndName } from '../utils/compareLogic';
+import { matchDateAndName, matchDateAndNameRelaxed } from '../utils/compareLogic';
 
 export const RESET_CSV_DATA = 'RESET_CSV_DATA';
 export const RESET_REDUX_STORE = 'RESET_REDUX_STORE';
@@ -20,6 +18,18 @@ export const compareData = () => (dispatch, getState) => {
     const { excelData, filteredData } = state;
 
     const { updatedFilteredData, updatedExcelEntries } = matchDateAndName(excelData, filteredData);
+
+    dispatch({
+        type: COMPARE_DATA,
+        payload: { updatedFilteredData, updatedExcelEntries },
+    });
+};
+
+export const compareDataRelaxed = () => (dispatch, getState) => {
+    const state = getState();
+    const { excelData, filteredData } = state;
+
+    const { updatedFilteredData, updatedExcelEntries } = matchDateAndNameRelaxed(excelData, filteredData);
 
     dispatch({
         type: COMPARE_DATA,
