@@ -1,102 +1,121 @@
-.printable-content {
-    display: flex;
-    flex-wrap: wrap;
-    width: 100%;
-    box-sizing: border-box;
+@page {
+    size: landscape;
+    margin: 0 !important;
   }
   
-  .table-wrapper {
-    flex: 1;
-    padding: 0 1px;
-  }
+  @media print {
+    body {
+      -webkit-print-color-adjust: exact !important;
+    }
   
-  .table-container {
-    width: 100%;
-    margin: 0 1px;
-  }
+    .printable-content {
+      display: flex !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+      column-count: 5 !important;
+      column-gap: 10px !important;
+    }
   
-  .dense-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
+    .print-column {
+      display: inline-block !important;
+      width: 100% !important;
+      break-inside: avoid !important;
+    }
   
-  .dense-table th, .dense-table td {
-    border: 1px solid #ddd;
-    padding: 0 4px;
-    font-size: 10px;
-    line-height: 1;
-    height: 20px;
-    text-align: left;
-    white-space: normal;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+    .section-header {
+      text-align: left !important;
+      font-size: 10px !important; /* Reduced font size */
+      font-weight: bold !important;
+      margin: 5px 0 !important; /* Reduced margin */
+      background-color: #333 !important;
+      color: #fff !important;
+      padding: 3px !important; /* Reduced padding */
+      display: table-cell !important;
+    }
   
-  .table-header {
-    max-width: 100px;
-    background-color: #333;
-    color: #fff;
-  }
+    .dense-table {
+      width: 100% !important;
+      border-collapse: collapse !important;
+    }
   
-  .checkin-header, .checkout-header {
-    width: 90px;
-    background-color: #333;
-    color: #fff;
-  }
+    .dense-table th, .dense-table td {
+      border: 1px solid #ddd !important;
+      padding: 0 2px !important; /* Reduced padding */
+      font-size: 6px !important; /* Reduced font size */
+      line-height: 1 !important;
+      height: 12px !important; /* Reduced height */
+      text-align: left !important;
+      white-space: normal !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
   
-  .table-cell {
-    max-width: 100px;
-    box-sizing: border-box;
-    white-space: normal;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+    .table-header {
+      max-width: 70px !important; /* Reduced width */
+      background-color: #333 !important;
+      color: #fff !important;
+    }
   
-  .checkin-cell, .checkout-cell {
-    width: 90px;
-    box-sizing: border-box;
-    white-space: normal;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+    .checkin-header, .checkout-header {
+      width: 60px !important; /* Reduced width */
+      background-color: #333 !important;
+      color: #fff !important;
+    }
   
-  .ok-cell.checked {
-    background-color: green;
-    color: white;
-    text-align: center;
-  }
+    .table-cell {
+      max-width: 70px !important; /* Reduced width */
+      box-sizing: border-box !important;
+      white-space: normal !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
   
-  .ok-cell.unchecked {
-    background-color: red;
-    color: white;
-    text-align: center;
-  }
+    .checkin-cell, .checkout-cell {
+      width: 60px !important; /* Reduced width */
+      box-sizing: border-box !important;
+      white-space: normal !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
   
-  .booking-header {
-    width: 110px;
-    background-color: #333;
-    color: #fff;
-  }
+    .ok-cell.checked {
+      background-color: green !important;
+      color: white !important;
+      text-align: center !important;
+    }
   
-  .booking-cell {
-    width: 110px;
-    box-sizing: border-box;
-    white-space: normal;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+    .ok-cell.unchecked {
+      background-color: red !important;
+      color: white !important;
+      text-align: center !important;
+    }
   
-  .checkbox-header {
-    min-width: 20px;
-    background-color: #333;
-    color: #fff;
-  }
+    .booking-header {
+      width: 80px !important; /* Reduced width */
+      background-color: #333 !important;
+      color: #fff !important;
+    }
   
-  .checkbox-cell {
-    min-width: 20px;
-    box-sizing: border-box;
-    white-space: normal;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    .booking-cell {
+      width: 80px !important; /* Reduced width */
+      box-sizing: border-box !important;
+      white-space: normal !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
+  
+    .checkbox-header {
+      min-width: 15px !important; /* Reduced width */
+      background-color: #333 !important;
+      color: #fff !important;
+    }
+  
+    .checkbox-cell {
+      min-width: 15px !important; /* Reduced width */
+      box-sizing: border-box !important;
+      white-space: normal !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
   }
   

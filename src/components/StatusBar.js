@@ -62,7 +62,7 @@ class StatusBar extends Component {
           />
         </div>
         <div style={{ display: 'none' }}>
-          <PrintableContent ref={this.printableContentRef} filteredData={filteredData} />
+          <PrintableContent ref={this.printableContentRef} filteredData={filteredData} properties={properties} />
         </div>
       </div>
     );
