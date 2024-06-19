@@ -16,6 +16,7 @@ const mapStateToProps = (state, ownProps) => ({
   fileType: ownProps.fileType,
   properties: state.properties,
   filteredData: state.filteredData, // Pass filteredData to the component
+  excelData: state.excelData, // Pass excelData to the component
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(StatusBar);

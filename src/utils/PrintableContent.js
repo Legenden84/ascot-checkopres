@@ -3,7 +3,7 @@ import './PrintableContent.css';
 
 class PrintableContent extends Component {
   render() {
-    const { filteredData, properties } = this.props;
+    const { filteredData, properties, excelData } = this.props;
 
     const fieldsToPrint = Object.keys(filteredData).slice(0, 4);
 
@@ -62,15 +62,23 @@ class PrintableContent extends Component {
 
     return (
       <div className="printable-content">
-        {columns.map((column, colIndex) => (
-          <div key={colIndex} className="print-column">
-            <table className="dense-table">
-              <tbody>
-                {column}
-              </tbody>
-            </table>
+        <div className="page-header-row">
+          <div className="page-header">
+            <h1>Ankomster</h1>
+            <p>Dato: {excelData.date}</p>
           </div>
-        ))}
+        </div>
+        <div className="content-columns">
+          {columns.map((column, colIndex) => (
+            <div key={colIndex} className="print-column">
+              <table className="dense-table">
+                <tbody>
+                  {column}
+                </tbody>
+              </table>
+            </div>
+          ))}
+        </div>
       </div>
     );
   }

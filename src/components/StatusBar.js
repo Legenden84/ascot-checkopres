@@ -26,7 +26,7 @@ class StatusBar extends Component {
   }
 
   render() {
-    const { properties, filteredData } = this.props;
+    const { properties, filteredData, excelData } = this.props;
 
     return (
       <div className="status-bar excel-status-bar">
@@ -62,7 +62,7 @@ class StatusBar extends Component {
           />
         </div>
         <div style={{ display: 'none' }}>
-          <PrintableContent ref={this.printableContentRef} filteredData={filteredData} properties={properties} />
+          <PrintableContent ref={this.printableContentRef} filteredData={filteredData} properties={properties} excelData={excelData} />
         </div>
       </div>
     );

@@ -8,10 +8,37 @@
       -webkit-print-color-adjust: exact !important;
     }
   
+    .page-header-row {
+      width: 100%;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+  
+    .page-header {
+      width: 100%;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+  
+    .page-header h1 {
+      font-size: 24px;
+      margin: 0;
+    }
+  
+    .page-header p {
+      font-size: 14px;
+      margin: 0;
+    }
+  
     .printable-content {
-      display: flex !important;
+      display: block !important;
       width: 100% !important;
       box-sizing: border-box !important;
+    }
+  
+    .content-columns {
+      display: flex !important;
+      width: 100% !important;
       column-count: 4 !important;
       column-gap: 10px !important;
     }
@@ -118,4 +145,4 @@
       text-overflow: ellipsis !important;
     }
   }
-  
+    
