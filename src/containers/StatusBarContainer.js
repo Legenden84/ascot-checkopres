@@ -3,18 +3,19 @@ import StatusBar from '../components/StatusBar';
 import { resetCsvData, resetReduxStore, compareData, compareDataRelaxed } from '../actions/statusBarActions';
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    resetCsvData: (fieldIndex) => dispatch(resetCsvData(fieldIndex)),
-    resetReduxStore: () => dispatch(resetReduxStore()),
-    compareData: () => {
-        dispatch(compareData());
-        dispatch(compareDataRelaxed());
-    },
+  resetCsvData: (fieldIndex) => dispatch(resetCsvData(fieldIndex)),
+  resetReduxStore: () => dispatch(resetReduxStore()),
+  compareData: () => {
+    dispatch(compareData());
+    dispatch(compareDataRelaxed());
+  },
 });
 
 const mapStateToProps = (state, ownProps) => ({
-    fieldIndex: ownProps.fieldIndex,
-    fileType: ownProps.fileType,
-    properties: state.properties,
+  fieldIndex: ownProps.fieldIndex,
+  fileType: ownProps.fileType,
+  properties: state.properties,
+  filteredData: state.filteredData, // Pass filteredData to the component
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(StatusBar);
