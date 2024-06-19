@@ -12,7 +12,7 @@
       display: flex !important;
       width: 100% !important;
       box-sizing: border-box !important;
-      column-count: 5 !important;
+      column-count: 4 !important;
       column-gap: 10px !important;
     }
   
@@ -24,12 +24,12 @@
   
     .section-header {
       text-align: left !important;
-      font-size: 10px !important; /* Reduced font size */
+      font-size: 12px !important; /* Increased font size */
       font-weight: bold !important;
-      margin: 5px 0 !important; /* Reduced margin */
+      margin: 5px 0 !important; /* Margin remains the same */
       background-color: #333 !important;
       color: #fff !important;
-      padding: 3px !important; /* Reduced padding */
+      padding: 4px !important; /* Increased padding */
       display: table-cell !important;
     }
   
@@ -40,10 +40,10 @@
   
     .dense-table th, .dense-table td {
       border: 1px solid #ddd !important;
-      padding: 0 2px !important; /* Reduced padding */
-      font-size: 6px !important; /* Reduced font size */
+      padding: 1px 3px !important; /* Increased padding */
+      font-size: 8px !important; /* Increased font size */
       line-height: 1 !important;
-      height: 12px !important; /* Reduced height */
+      height: 14px !important; /* Increased height */
       text-align: left !important;
       white-space: normal !important;
       overflow: hidden !important;
@@ -51,19 +51,19 @@
     }
   
     .table-header {
-      max-width: 70px !important; /* Reduced width */
+      max-width: 80px !important; /* Increased width */
       background-color: #333 !important;
       color: #fff !important;
     }
   
     .checkin-header, .checkout-header {
-      width: 60px !important; /* Reduced width */
+      width: 70px !important; /* Increased width */
       background-color: #333 !important;
       color: #fff !important;
     }
   
     .table-cell {
-      max-width: 70px !important; /* Reduced width */
+      max-width: 80px !important; /* Increased width */
       box-sizing: border-box !important;
       white-space: normal !important;
       overflow: hidden !important;
@@ -71,7 +71,7 @@
     }
   
     .checkin-cell, .checkout-cell {
-      width: 60px !important; /* Reduced width */
+      width: 70px !important; /* Increased width */
       box-sizing: border-box !important;
       white-space: normal !important;
       overflow: hidden !important;
@@ -91,13 +91,13 @@
     }
   
     .booking-header {
-      width: 80px !important; /* Reduced width */
+      width: 90px !important; /* Increased width */
       background-color: #333 !important;
       color: #fff !important;
     }
   
     .booking-cell {
-      width: 80px !important; /* Reduced width */
+      width: 90px !important; /* Increased width */
       box-sizing: border-box !important;
       white-space: normal !important;
       overflow: hidden !important;
@@ -105,13 +105,13 @@
     }
   
     .checkbox-header {
-      min-width: 15px !important; /* Reduced width */
+      min-width: 20px !important; /* Increased width */
       background-color: #333 !important;
       color: #fff !important;
     }
   
     .checkbox-cell {
-      min-width: 15px !important; /* Reduced width */
+      min-width: 20px !important; /* Increased width */
       box-sizing: border-box !important;
       white-space: normal !important;
       overflow: hidden !important;

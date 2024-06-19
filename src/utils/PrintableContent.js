@@ -4,47 +4,58 @@ import './PrintableContent.css';
 class PrintableContent extends Component {
   render() {
     const { filteredData, properties } = this.props;
-    const rowsPerColumn = 40; // Adjust this value as necessary to fit your layout
-    
-    const allRows = Object.keys(filteredData).flatMap((fieldKey, index) => {
-      return [
+
+    const fieldsToPrint = Object.keys(filteredData).slice(0, 4);
+
+    const allSections = fieldsToPrint.map((fieldKey, index) => {
+      const propertyHeader = (
         <tr key={`header-${fieldKey}`} className="header-row">
           <td colSpan="6" className="section-header">{properties[`property${index + 1}`]}</td>
-        </tr>,
-        ...filteredData[fieldKey].map((row, rowIndex) => (
-          <tr key={`${fieldKey}-${rowIndex}`}>
-            <td className="table-cell booking-cell">{row.bookingReference}</td>
-            <td className="table-cell">{row.lastname}</td>
-            <td className="table-cell">{row.firstname}</td>
-            <td className="table-cell checkin-cell">{row.checkIn}</td>
-            <td className="table-cell checkout-cell">{row.checkOut}</td>
-            <td className={`table-cell ok-cell ${row.checked ? 'checked' : 'unchecked'}`}>
-              {row.checked ? '✔' : '✘'}
-            </td>
-          </tr>
-        )),
-      ];
+        </tr>
+      );
+
+      const tableHeader = (
+        <tr key={`table-header-${fieldKey}`}>
+          <th className="table-header booking-header">Booking #</th>
+          <th className="table-header">Last Name</th>
+          <th className="table-header">First Name</th>
+          <th className="table-header checkin-header">Check-In</th>
+          <th className="table-header checkout-header">Check-Out</th>
+          <th className="table-header">OK</th>
+        </tr>
+      );
+
+      const rows = filteredData[fieldKey].map((row, rowIndex) => (
+        <tr key={`${fieldKey}-${rowIndex}`}>
+          <td className="table-cell booking-cell">{row.bookingReference}</td>
+          <td className="table-cell">{row.lastname}</td>
+          <td className="table-cell">{row.firstname}</td>
+          <td className="table-cell checkin-cell">{row.checkIn}</td>
+          <td className="table-cell checkout-cell">{row.checkOut}</td>
+          <td className={`table-cell ok-cell ${row.checked ? 'checked' : 'unchecked'}`}>
+            {row.checked ? '✔' : '✘'}
+          </td>
+        </tr>
+      ));
+
+      return [propertyHeader, tableHeader, ...rows];
     });
 
     let columns = [];
     let currentColumn = [];
     let currentRowCount = 0;
+    const rowsPerColumn = Math.ceil(allSections.flat().length / 4);
 
-    allRows.forEach(row => {
-      if (row.props.className === 'header-row' && currentRowCount + 1 > rowsPerColumn) {
+    allSections.flat().forEach(row => {
+      if (currentRowCount >= rowsPerColumn) {
         columns.push(currentColumn);
-        currentColumn = [row];
-        currentRowCount = 1;
-      } else {
-        currentColumn.push(row);
-        currentRowCount++;
-        if (currentRowCount >= rowsPerColumn) {
-          columns.push(currentColumn);
-          currentColumn = [];
-          currentRowCount = 0;
-        }
+        currentColumn = [];
+        currentRowCount = 0;
       }
+      currentColumn.push(row);
+      currentRowCount++;
     });
+
     if (currentColumn.length) {
       columns.push(currentColumn);
     }
@@ -54,16 +65,6 @@ class PrintableContent extends Component {
         {columns.map((column, colIndex) => (
           <div key={colIndex} className="print-column">
             <table className="dense-table">
-              <thead>
-                <tr>
-                  <th className="table-header booking-header">Booking #</th>
-                  <th className="table-header">Last Name</th>
-                  <th className="table-header">First Name</th>
-                  <th className="table-header checkin-header">Check-In</th>
-                  <th className="table-header checkout-header">Check-Out</th>
-                  <th className="table-header">OK</th>
-                </tr>
-              </thead>
               <tbody>
                 {column}
               </tbody>
