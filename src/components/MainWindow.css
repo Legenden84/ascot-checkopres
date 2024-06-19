@@ -1,3 +1,4 @@
+/* MainWindow.css */
 .main-window {
     display: flex;
     justify-content: space-between;
@@ -27,7 +28,7 @@
     line-height: 1;
     height: 20px;
     text-align: left;
-    white-space: nowrap;
+    white-space: normal; /* Allow text to wrap */
     overflow: hidden;
     text-overflow: ellipsis;
 }
@@ -47,11 +48,17 @@
 .table-cell {
     max-width: 100px;
     box-sizing: border-box;
+    white-space: normal; /* Allow text to wrap */
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .checkin-cell, .checkout-cell {
     width: 90px;
     box-sizing: border-box;
+    white-space: normal; /* Allow text to wrap */
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .ok-cell.checked {
@@ -76,6 +83,9 @@
 .booking-cell {
     width: 110px;
     box-sizing: border-box;
+    white-space: normal; /* Allow text to wrap */
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* New styles for the checkbox column */
@@ -88,4 +98,7 @@
 .checkbox-cell {
     min-width: 20px;
     box-sizing: border-box;
+    white-space: normal; /* Allow text to wrap */
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

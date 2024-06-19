@@ -1,3 +1,4 @@
+// FileDropzone.js
 import React from 'react';
 import './FileDropzone.css';
 
@@ -33,6 +34,7 @@ class FileDropzone extends React.Component {
 
     render() {
         const { disabled, property, date, fileType } = this.props;
+        const className = `file-dropzone ${fileType === 'excel' ? 'file-dropzone-excel' : ''} ${disabled ? 'disabled' : ''}`;
         let dropzoneText = '';
 
         if (fileType === 'csv') {
@@ -43,7 +45,7 @@ class FileDropzone extends React.Component {
 
         return (
             <div
-                className={`file-dropzone ${disabled ? 'disabled' : ''}`}
+                className={className}
                 onDrop={this.handleDrop}
                 onDragOver={this.handleDragOver}
                 onClick={this.handleClick}

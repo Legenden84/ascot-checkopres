@@ -1,3 +1,4 @@
+/* FileDropzone.css */
 .file-dropzone {
     border: 2px dashed #ccc;
     padding: 10px;
@@ -14,6 +15,11 @@
     cursor: pointer;
 }
 
+.file-dropzone-excel {
+    background-color: #444; /* Different background color for Excel dropzones */
+    border-color: #888; /* Different border color for Excel dropzones */
+}
+
 .file-dropzone.disabled {
     background-color: #666;
     cursor: not-allowed;
@@ -26,7 +32,7 @@
 
 .file-dropzone p {
     margin: 0;
-    white-space: normal;
+    white-space: normal; /* Allow text to wrap */
     word-wrap: break-word;
     text-align: center;
     width: 100%;

@@ -1,17 +1,40 @@
+/* StatusBar.css */
 .status-bar {
     background: #eee;
     padding: 10px;
     display: flex;
     justify-content: center;
+    align-items: center;
     flex-wrap: wrap;
+    height: 100px; /* Match the height of the dropzone */
 }
 
 .status-bar-buttons {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two equal columns */
+    grid-template-rows: 1fr 1fr; /* Two equal rows */
+    grid-gap: 15px; /* Increase space between buttons */
+    justify-items: center;
+    align-items: center;
 }
 
 .status-bar-buttons button {
-    margin: 5px 0;
+    margin: 0; /* Remove margin to eliminate spacing */
+    padding: 10px; /* Add padding for more space around the icons */
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px; /* Adjust font size if necessary */
+    color: #333;
+    display: flex;
+    align-items: center; /* Ensure icons are centered vertically */
+    justify-content: center;
+}
+
+.status-bar-buttons button:hover {
+    color: #000;
+}
+
+.status-bar-buttons button i {
+    font-size: 20px; /* Adjust icon size to make them smaller */
 }

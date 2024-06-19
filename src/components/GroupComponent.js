@@ -1,3 +1,4 @@
+// GroupComponent.js
 import React from 'react';
 import FileDropzoneContainer from '../containers/FileDropzoneContainer';
 import StatusBarContainer from '../containers/StatusBarContainer';

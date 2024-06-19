@@ -1,3 +1,4 @@
+/* GroupComponent.css */
 .group-container {
     display: flex;
     flex-direction: column;
@@ -8,23 +9,25 @@
 .dropzone-status-container {
     display: flex;
     width: 100%;
-    align-items: flex-start;
+    align-items: center; /* Align items to the center to ensure proper alignment */
     box-sizing: border-box;
 }
 
 .dropzone-container {
-    width: 100%;
+    flex: 1; /* Default behavior to take equal space */
     box-sizing: border-box;
+}
+
+.excel-group .dropzone-container {
+    flex: 0 0 70%; /* Make the Excel dropzone smaller */
 }
 
 .status-bar-container {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    padding: 0 0 0 0;
-}
-
-.excel-group .dropzone-status-container {
-    display: flex;
-    flex-direction: row;
+    justify-content: center;
+    padding: 0; /* Remove padding to ensure alignment */
+    margin-left: 0; /* Remove margin to ensure alignment */
+    flex: 0 0 30%; /* Ensure the status bar takes up the remaining space */
+    height: 100px; /* Match the height with the dropzone */
 }
