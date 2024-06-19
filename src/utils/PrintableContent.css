@@ -1,13 +1,9 @@
 @page {
     size: landscape;
     margin: 0 !important;
-  }
+}
   
-  @media print {
-    body {
-      -webkit-print-color-adjust: exact !important;
-    }
-  
+@media print {
     .page-header-row {
       width: 100%;
       text-align: center;
@@ -51,12 +47,12 @@
   
     .section-header {
       text-align: left !important;
-      font-size: 12px !important; /* Increased font size */
+      font-size: 12px !important;
       font-weight: bold !important;
-      margin: 5px 0 !important; /* Margin remains the same */
+      margin: 5px 0 !important;
       background-color: #333 !important;
       color: #fff !important;
-      padding: 4px !important; /* Increased padding */
+      padding: 4px !important;
       display: table-cell !important;
     }
   
@@ -67,10 +63,10 @@
   
     .dense-table th, .dense-table td {
       border: 1px solid #ddd !important;
-      padding: 1px 3px !important; /* Increased padding */
-      font-size: 8px !important; /* Increased font size */
+      padding: 1px 3px !important;
+      font-size: 8px !important;
       line-height: 1 !important;
-      height: 14px !important; /* Increased height */
+      height: 14px !important;
       text-align: left !important;
       white-space: normal !important;
       overflow: hidden !important;
@@ -78,19 +74,19 @@
     }
   
     .table-header {
-      max-width: 80px !important; /* Increased width */
+      max-width: 80px !important;
       background-color: #333 !important;
       color: #fff !important;
     }
   
     .checkin-header, .checkout-header {
-      width: 70px !important; /* Increased width */
+      width: 70px !important;
       background-color: #333 !important;
       color: #fff !important;
     }
   
     .table-cell {
-      max-width: 80px !important; /* Increased width */
+      max-width: 80px !important;
       box-sizing: border-box !important;
       white-space: normal !important;
       overflow: hidden !important;
@@ -98,7 +94,7 @@
     }
   
     .checkin-cell, .checkout-cell {
-      width: 70px !important; /* Increased width */
+      width: 70px !important;
       box-sizing: border-box !important;
       white-space: normal !important;
       overflow: hidden !important;
@@ -118,13 +114,13 @@
     }
   
     .booking-header {
-      width: 90px !important; /* Increased width */
+      width: 90px !important;
       background-color: #333 !important;
       color: #fff !important;
     }
   
     .booking-cell {
-      width: 90px !important; /* Increased width */
+      width: 90px !important; 
       box-sizing: border-box !important;
       white-space: normal !important;
       overflow: hidden !important;
@@ -132,13 +128,13 @@
     }
   
     .checkbox-header {
-      min-width: 20px !important; /* Increased width */
+      min-width: 20px !important; 
       background-color: #333 !important;
       color: #fff !important;
     }
   
     .checkbox-cell {
-      min-width: 20px !important; /* Increased width */
+      min-width: 20px !important; 
       box-sizing: border-box !important;
       white-space: normal !important;
       overflow: hidden !important;
