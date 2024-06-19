@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './StatusBar.css';
 
 class StatusBar extends Component {
     handleReset = () => {
@@ -17,7 +18,7 @@ class StatusBar extends Component {
     render() {
         const { fileType } = this.props;
         return (
-            <div className="status-bar">
+            <div className={`status-bar ${fileType === 'excel' ? 'excel-status-bar' : ''}`}>
                 <div className="status-bar-buttons">
                     {fileType === 'csv' ? (
                         <>
@@ -26,8 +27,8 @@ class StatusBar extends Component {
                         </>
                     ) : (
                         <>
-                            <button onClick={this.handleResetReduxStore}>Reset Redux Store</button>
-                            <button onClick={this.handleCompareData}>Compare Data</button>
+                            <button onClick={this.handleResetReduxStore}>Reset</button>
+                            <button onClick={this.handleCompareData}>Compare</button>
                         </>
                     )}
                 </div>

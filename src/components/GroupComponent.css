@@ -5,7 +5,26 @@
     box-sizing: border-box;
 }
 
+.dropzone-status-container {
+    display: flex;
+    width: 100%;
+    align-items: flex-start;
+    box-sizing: border-box;
+}
+
 .dropzone-container {
     width: 100%;
     box-sizing: border-box;
+}
+
+.status-bar-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 0 0 0 0;
+}
+
+.excel-group .dropzone-status-container {
+    display: flex;
+    flex-direction: row;
 }

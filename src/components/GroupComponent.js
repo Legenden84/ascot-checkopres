@@ -5,11 +5,17 @@ import MainWindowContainer from '../containers/MainWindowContainer';
 import './GroupComponent.css';
 
 const GroupComponent = ({ fileType, fieldIndex }) => (
-    <div className="group-container">
-        <div className="dropzone-container">
-            <FileDropzoneContainer fileType={fileType} fieldIndex={fieldIndex} />
+    <div className={`group-container ${fileType === 'excel' ? 'excel-group' : ''}`}>
+        <div className="dropzone-status-container">
+            <div className="dropzone-container">
+                <FileDropzoneContainer fileType={fileType} fieldIndex={fieldIndex} />
+            </div>
+            {fileType === 'excel' && (
+                <div className="status-bar-container">
+                    <StatusBarContainer fileType={fileType} fieldIndex={fieldIndex} />
+                </div>
+            )}
         </div>
-        <StatusBarContainer fileType={fileType} fieldIndex={fieldIndex} />
         <MainWindowContainer fileType={fileType} fieldIndex={fieldIndex} />
     </div>
 );

@@ -1,0 +1,17 @@
+.status-bar {
+    background: #eee;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.status-bar-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.status-bar-buttons button {
+    margin: 5px 0;
+}

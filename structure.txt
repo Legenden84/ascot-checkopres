@@ -1,6 +1,21 @@
 .
 ├── README.md
-├── delete.json
+├── build
+│   ├── asset-manifest.json
+│   ├── favicon.ico
+│   ├── index.html
+│   ├── logo192.png
+│   ├── logo512.png
+│   ├── manifest.json
+│   ├── robots.txt
+│   └── static
+│       ├── css
+│       │   ├── main.7cd2d993.css
+│       │   └── main.7cd2d993.css.map
+│       └── js
+│           ├── main.dcd919ed.js
+│           ├── main.dcd919ed.js.LICENSE.txt
+│           └── main.dcd919ed.js.map
 ├── package-lock.json
 ├── package.json
 ├── public
@@ -18,6 +33,7 @@
     │   ├── mainWindowActions.js
     │   └── statusBarActions.js
     ├── components
+    │   ├── FileDropzone.css
     │   ├── FileDropzone.js
     │   ├── GroupComponent.css
     │   ├── GroupComponent.js
@@ -36,7 +52,9 @@
     ├── index.js
     ├── reducers
     │   └── reducers.js
-    └── store
-        └── index.js
+    ├── store
+    │   └── index.js
+    └── utils
+        └── compareLogic.js
 
-7 directories, 32 files
+12 directories, 45 files
