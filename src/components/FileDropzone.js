@@ -1,4 +1,3 @@
-// FileDropzone.js
 import React from 'react';
 import './FileDropzone.css';
 

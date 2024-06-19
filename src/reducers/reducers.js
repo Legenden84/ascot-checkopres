@@ -111,9 +111,14 @@ const rootReducer = (state = initialState, action) => {
                 ...state.csvData,
                 [resetFieldIndex]: []
             };
+            const resetFilteredData = {
+                ...state.filteredData,
+                [resetFieldIndex]: []
+            };
             return {
                 ...state,
                 csvData: resetCsvData,
+                filteredData: resetFilteredData,
                 properties: {
                     ...state.properties,
                     [`property${action.payload.fieldIndex}`]: null

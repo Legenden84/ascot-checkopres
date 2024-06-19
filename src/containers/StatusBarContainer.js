@@ -14,6 +14,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 const mapStateToProps = (state, ownProps) => ({
     fieldIndex: ownProps.fieldIndex,
     fileType: ownProps.fileType,
+    properties: state.properties,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(StatusBar);
