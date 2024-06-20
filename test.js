@@ -9,7 +9,7 @@ const wordsMatch = (excelNameParts, csvNameParts) => {
     return sortedExcelNameParts.every(word => sortedCsvNameParts.includes(word)) && sortedCsvNameParts.every(word => sortedExcelNameParts.includes(word));
 };
 
-export const matchDateAndName = (filteredData, excelData) => {
+const matchDateAndName = (filteredData, excelData) => {
     if (!excelData || !excelData.entries) {
         console.error('excelData or excelData.entries is undefined');
         return { updatedFilteredData: filteredData, updatedExcelEntries: [] };
@@ -43,16 +43,11 @@ export const matchDateAndName = (filteredData, excelData) => {
             return filteredRow;
         });
     });
-    console.log("Updated Excel Entries:", updatedExcelEntries);
-    return {
-        updatedFilteredData,
-        updatedExcelEntries
-    };
-};
+}
 
-export const matchDateAndNameRelaxed = (excelData, filteredData) => {
+const matchDateAndNameRelaxed = (excelData, filteredData) => {
     const updatedFilteredData = {};
-    const updatedExcelEntries = excelData.entries.map((excelRow, index) => ({ ...excelRow, checked: false, id: index }));
+    const updatedExcelEntries = excelData.entries.map(entry => ({ ...entry, checked: false }));
 
     Object.keys(filteredData).forEach((fieldKey) => {
         updatedFilteredData[fieldKey] = filteredData[fieldKey].map((csvRow) => {
@@ -81,6 +76,35 @@ export const matchDateAndNameRelaxed = (excelData, filteredData) => {
             return csvRow;
         });
     });
-    console.log("Updated Excel Entries (relaxed):", updatedExcelEntries);
+
     return { updatedFilteredData, updatedExcelEntries };
 };
+
+const excelData = {
+    date: '12-05-2024',
+    entries: [
+        // Other entries...
+        {
+            firstname: 'L Cruz Andrea',
+            lastname: 'Naddeo',
+            resNum: 136394,
+            adults: '2',
+            group: '',
+            checkIn: '12-05-2024',
+            checkOut: '16-05-2024',
+            checked: false
+        },
+        // Other entries...
+    ],
+};
+
+const filteredData = {
+    field1: [
+        { guests: 'Andrea Naddeo L Cruz', checkIn: '12-05-2024', checkOut: '16-05-2024', checked: false },
+        // Other rows...
+    ],
+};
+
+// Call the function with the example data
+const result = matchDateAndNameRelaxed(excelData, filteredData);
+console.log(result);

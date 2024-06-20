@@ -1,7 +1,7 @@
-import { matchDateAndName } from '../utils/compareLogic';
+// import { matchDateAndName, matchDateAndNameRelaxed } from '../utils/compareLogic';
 import { SET_EXCEL_DATA, SET_CSV_DATA } from "../actions/importExcelCsvActions";
 import { UPDATE_EXCEL_CHECKED_STATUS, UPDATE_CSV_CHECKED_STATUS, SAVE_FILTERED_DATA } from "../actions/mainWindowActions";
-import { RESET_CSV_DATA, RESET_REDUX_STORE, COMPARE_DATA } from "../actions/statusBarActions";
+import { RESET_CSV_DATA, RESET_REDUX_STORE, COMPARE_DATA_STRICT, COMPARE_DATA_RELAXED } from "../actions/statusBarActions";
 
 const initialState = {
     excelData: {
@@ -127,8 +127,18 @@ const rootReducer = (state = initialState, action) => {
             };
         case RESET_REDUX_STORE:
             return initialState;
-        case COMPARE_DATA:
-            const { updatedFilteredData: comparedFilteredData, updatedExcelEntries: comparedExcelEntries } = matchDateAndName(state.filteredData, state.excelData);
+        case COMPARE_DATA_STRICT:
+            const { updatedFilteredData: strictFilteredData, updatedExcelEntries: strictExcelEntries } = action.payload;
+            return {
+                ...state,
+                filteredData: strictFilteredData,
+                excelData: {
+                    ...state.excelData,
+                    entries: strictExcelEntries,
+                }
+            };
+        case COMPARE_DATA_RELAXED:
+            const { updatedFilteredData: comparedFilteredData, updatedExcelEntries: comparedExcelEntries } = action.payload;
             return {
                 ...state,
                 filteredData: comparedFilteredData,
