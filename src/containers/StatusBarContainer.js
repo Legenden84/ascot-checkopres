@@ -1,14 +1,11 @@
 import { connect } from 'react-redux';
 import StatusBar from '../components/StatusBar';
-import { resetCsvData, resetReduxStore, compareData, compareDataRelaxed } from '../actions/statusBarActions';
+import { resetCsvData, resetReduxStore, dispatchMatchDateAndName } from '../actions/statusBarActions';
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   resetCsvData: (fieldIndex) => dispatch(resetCsvData(fieldIndex)),
   resetReduxStore: () => dispatch(resetReduxStore()),
-  compareData: () => {
-    dispatch(compareData());
-    dispatch(compareDataRelaxed());
-  },
+  compareData: () => dispatch(dispatchMatchDateAndName()),
 });
 
 const mapStateToProps = (state, ownProps) => ({

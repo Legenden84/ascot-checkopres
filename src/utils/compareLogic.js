@@ -1,73 +1,40 @@
-const splitWords = (str) => {
-    if (typeof str !== 'string') return [];
-    return str.split(' ').filter(word => word.trim() !== '');
-};
+export const matchDateAndName = (filteredData, excelData) => {
+    if (!excelData || !excelData.entries) {
+        console.error('excelData or excelData.entries is undefined');
+        return { updatedFilteredData: filteredData, updatedExcelEntries: [] };
+    }
 
-const wordsMatch = (excelNameParts, csvNameParts) => {
-    return csvNameParts.every(word => excelNameParts.includes(word));
-};
+    if (!filteredData) {
+        console.error('filteredData is undefined');
+        return { updatedFilteredData: {}, updatedExcelEntries: excelData.entries };
+    }
 
+    const updatedFilteredData = { ...filteredData };
+    const updatedExcelEntries = excelData.entries.map(entry => ({ ...entry, checked: false }));
 
-export const matchDateAndName = (excelData, filteredData) => {
-    const updatedFilteredData = {};
-    const updatedExcelEntries = excelData.entries.map((excelRow) => {
-        let matched = false;
+    Object.keys(filteredData).forEach(fieldKey => {
+        updatedFilteredData[fieldKey] = filteredData[fieldKey].map(filteredRow => {
+            const matchedExcelIndex = updatedExcelEntries.findIndex(excelRow => 
+                excelRow.checkIn === filteredRow.checkIn &&
+                excelRow.checkOut === filteredRow.checkOut &&
+                excelRow.firstname.trim().toLowerCase() === filteredRow.firstname.trim().toLowerCase() &&
+                excelRow.lastname.trim().toLowerCase() === filteredRow.lastname.trim().toLowerCase() &&
+                !excelRow.checked // Ensure that we only match with unchecked rows
+            );
 
-        Object.keys(filteredData).forEach((fieldKey) => {
-            filteredData[fieldKey] = filteredData[fieldKey].map((csvRow) => {
-                if (csvRow.checked) return csvRow;
+            if (matchedExcelIndex !== -1) {
+                filteredRow.checked = true;
+                updatedExcelEntries[matchedExcelIndex].checked = true;
+            } else {
+                filteredRow.checked = false; // If no match found, ensure it's unchecked
+            }
 
-                if (
-                    excelRow.checkIn === csvRow.checkIn &&
-                    excelRow.checkOut === csvRow.checkOut &&
-                    excelRow.firstname.trim() === csvRow.firstname.trim() &&
-                    excelRow.lastname.trim() === csvRow.lastname.trim()
-                ) {
-                    matched = true;
-                    return { ...csvRow, checked: true };
-                }
-
-                return csvRow;
-            });
-
-            updatedFilteredData[fieldKey] = filteredData[fieldKey];
+            return filteredRow;
         });
-
-        return matched ? { ...excelRow, checked: true } : excelRow;
     });
 
-    return { updatedFilteredData, updatedExcelEntries };
-};
-
-export const matchDateAndNameRelaxed = (excelData, filteredData) => {
-    const updatedFilteredData = {};
-    const updatedExcelEntries = excelData.entries.map((excelRow) => {
-        let matched = false;
-        const excelNameParts = splitWords(excelRow.firstname + ' ' + excelRow.lastname);
-
-        Object.keys(filteredData).forEach((fieldKey) => {
-            filteredData[fieldKey] = filteredData[fieldKey].map((csvRow) => {
-                if (csvRow.checked) return csvRow;
-
-                const csvNameParts = splitWords(csvRow.guests);
-
-                if (
-                    excelRow.checkIn === csvRow.checkIn &&
-                    excelRow.checkOut === csvRow.checkOut &&
-                    wordsMatch(excelNameParts, csvNameParts)
-                ) {
-                    matched = true;
-                    return { ...csvRow, checked: true };
-                }
-
-                return csvRow;
-            });
-
-            updatedFilteredData[fieldKey] = filteredData[fieldKey];
-        });
-
-        return matched ? { ...excelRow, checked: true } : excelRow;
-    });
-
-    return { updatedFilteredData, updatedExcelEntries };
+    return {
+        updatedFilteredData,
+        updatedExcelEntries
+    };
 };
