@@ -25,6 +25,21 @@ class StatusBar extends Component {
     return property ? `Reset ${property}` : defaultText;
   }
 
+  renderResetButtons = () => {
+    const { properties } = this.props;
+    return [1, 2, 3, 4].map((fieldIndex) => {
+      const propertyKey = `property${fieldIndex}`;
+      if (properties && properties[propertyKey]) {
+        return (
+          <button key={fieldIndex} onClick={() => this.handleResetCsvData(fieldIndex)}>
+            {this.getResetButtonText(properties[propertyKey], `CSV ${fieldIndex}`)}
+          </button>
+        );
+      }
+      return null;
+    });
+  }
+
   render() {
     const { properties, filteredData, excelData } = this.props;
 
@@ -36,18 +51,7 @@ class StatusBar extends Component {
               <i className="fas fa-sync-alt"></i>
             </button>
             <div className="dropdown-content">
-              <button onClick={() => this.handleResetCsvData(1)}>
-                {this.getResetButtonText(properties.property1, 'CSV 1')}
-              </button>
-              <button onClick={() => this.handleResetCsvData(2)}>
-                {this.getResetButtonText(properties.property2, 'CSV 2')}
-              </button>
-              <button onClick={() => this.handleResetCsvData(3)}>
-                {this.getResetButtonText(properties.property3, 'CSV 3')}
-              </button>
-              <button onClick={() => this.handleResetCsvData(4)}>
-                {this.getResetButtonText(properties.property4, 'CSV 4')}
-              </button>
+              {this.renderResetButtons()}
               <button onClick={this.handleResetReduxStore}>
                 Reset All
               </button>
