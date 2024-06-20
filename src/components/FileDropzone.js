@@ -1,13 +1,22 @@
 import React from 'react';
+import Modal from '../utils/Modal';
 import './FileDropzone.css';
 
 class FileDropzone extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            showWarning: false,
+            warningMessage: '',
+        };
+    }
+
     handleDrop = (event) => {
         event.preventDefault();
-        const { onDrop, fieldIndex } = this.props;
+        const { onDrop, fieldIndex, fileType } = this.props;
         const files = event.dataTransfer.files;
         if (files.length) {
-            onDrop(files[0], fieldIndex);
+            this.handleFile(files[0], fieldIndex, onDrop, fileType);
         }
     }
 
@@ -16,10 +25,10 @@ class FileDropzone extends React.Component {
     }
 
     handleChange = (event) => {
-        const { onDrop, fieldIndex } = this.props;
+        const { onDrop, fieldIndex, fileType } = this.props;
         const files = event.target.files;
         if (files.length) {
-            onDrop(files[0], fieldIndex);
+            this.handleFile(files[0], fieldIndex, onDrop, fileType);
         }
     }
 
@@ -29,6 +38,24 @@ class FileDropzone extends React.Component {
 
     setFileInputRef = (element) => {
         this.fileInput = element;
+    }
+
+    handleFile = (file, fieldIndex, onDrop, fileType) => {
+        const validExtensions = fileType === 'excel' ? ['.xlsx', '.xls'] : ['.csv'];
+        const fileExtension = file.name.slice(file.name.lastIndexOf('.')).toLowerCase();
+        if (validExtensions.includes(fileExtension)) {
+            this.setState({ showWarning: false, warningMessage: '' });
+            onDrop(file, fieldIndex);
+        } else {
+            const warningMessage = fileType === 'excel' 
+                ? 'Forkert fil. Vælg Spectra AnkomstListe!'
+                : 'Forkert fil. Vælg SiteMinder fil!.';
+            this.setState({ showWarning: true, warningMessage });
+        }
+    }
+
+    closeModal = () => {
+        this.setState({ showWarning: false, warningMessage: '' });
     }
 
     render() {
@@ -43,21 +70,29 @@ class FileDropzone extends React.Component {
         }
 
         return (
-            <div
-                className={className}
-                onDrop={this.handleDrop}
-                onDragOver={this.handleDragOver}
-                onClick={this.handleClick}
-            >
-                <input
-                    type="file"
-                    accept=".csv, .xlsx, .xls"
-                    onChange={this.handleChange}
-                    disabled={disabled}
-                    ref={this.setFileInputRef}
-                    style={{ display: 'none' }}
-                />
-                <p>{property || date || dropzoneText}</p>
+            <div className="dropzone-container">
+                <div
+                    className={className}
+                    onDrop={this.handleDrop}
+                    onDragOver={this.handleDragOver}
+                    onClick={this.handleClick}
+                >
+                    <input
+                        type="file"
+                        accept={fileType === 'excel' ? '.xlsx, .xls' : '.csv'}
+                        onChange={this.handleChange}
+                        disabled={disabled}
+                        ref={this.setFileInputRef}
+                        style={{ display: 'none' }}
+                    />
+                    <p>{property || date || dropzoneText}</p>
+                </div>
+                {this.state.showWarning && (
+                    <Modal 
+                        message={this.state.warningMessage} 
+                        onClose={this.closeModal} 
+                    />
+                )}
             </div>
         );
     }
