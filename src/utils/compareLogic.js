@@ -52,7 +52,7 @@ export const matchDateAndName = (filteredData, excelData) => {
 
 export const matchDateAndNameRelaxed = (excelData, filteredData) => {
     const updatedFilteredData = {};
-    const updatedExcelEntries = excelData.entries.map((excelRow, index) => ({ ...excelRow, checked: false, id: index }));
+    const updatedExcelEntries = excelData.entries.map(entry => ({ ...entry }));
 
     Object.keys(filteredData).forEach((fieldKey) => {
         updatedFilteredData[fieldKey] = filteredData[fieldKey].map((csvRow) => {
@@ -81,6 +81,7 @@ export const matchDateAndNameRelaxed = (excelData, filteredData) => {
             return csvRow;
         });
     });
-    console.log("Updated Excel Entries (relaxed):", updatedExcelEntries);
+
+    console.log("Updated Excel Entries (Relaxed):", updatedExcelEntries);
     return { updatedFilteredData, updatedExcelEntries };
 };
