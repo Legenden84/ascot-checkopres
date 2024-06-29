@@ -19,22 +19,9 @@ const splitWords = (str) => {
     return str.split(' ').filter(word => word.trim() !== '');
 };
 
-// const wordsMatch = (excelNameParts, csvNameParts) => {
-//     const sortedExcelNameParts = excelNameParts.sort().map(word => word.toLowerCase());
-//     const sortedCsvNameParts = csvNameParts.sort().map(word => word.toLowerCase());
-//     return sortedExcelNameParts.every(word => sortedCsvNameParts.includes(word)) && sortedCsvNameParts.every(word => sortedExcelNameParts.includes(word));
-// };
-
 const wordsMatch = (excelNameParts, csvNameParts) => {
     const sortedExcelNameParts = excelNameParts.sort().map(word => word.toLowerCase());
     const sortedCsvNameParts = csvNameParts.sort().map(word => word.toLowerCase());
-
-    console.log("sortedCsvNameParts", sortedCsvNameParts)
-    // const targetArray = ["camilla", "hyyppa", "laaksonen", "ville-veikko"];
-    
-    // if (JSON.stringify(sortedCsvNameParts) === JSON.stringify(targetArray)) {
-    //     console.log("SUCCESS");
-    // }
 
     // Find the shorter and the longer list
     const [shorterList, longerList] = sortedExcelNameParts.length <= sortedCsvNameParts.length
