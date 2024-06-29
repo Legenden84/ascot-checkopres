@@ -59,9 +59,11 @@ class MainWindow extends Component {
     render() {
         const { entries, fileType } = this.props;
 
+        const sortedEntries = [...entries].sort((a, b) => a.lastname.localeCompare(b.lastname));
+
         return (
             <div className="main-window">
-                {this.renderTable(entries, fileType)}
+                {this.renderTable(sortedEntries, fileType)}
             </div>
         );
     }
