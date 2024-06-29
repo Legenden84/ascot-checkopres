@@ -1,36 +1,31 @@
 .status-bar {
     background: #eee;
-    padding: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    height: calc(100% - 20px); /* Adjust the height to fit within the container */
-    border-radius: 15px; /* Add rounded corners */
-    border: 2px solid #ccc; /* Add a border */
+    height: 100%;
+    border-radius: 15px;
+    border: 2px solid #ccc;
     box-sizing: border-box;
-    margin: 10px; /* Add uniform margin */
-    width: calc(100% - 20px); /* Allow it to shrink */
-    max-width: calc(100% - 20px); /* Ensure it fits within the container */
+    width: 100%;
 }
 
 .status-bar-buttons {
     display: grid;
-    grid-template-columns: repeat(1, 1fr); /* Arrange buttons in a grid with 1 column */
-    grid-gap: 10px; /* Add gap between buttons */
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
     justify-items: center;
     align-items: center;
     width: 100%;
 }
 
-.status-bar-buttons button,a
+.status-bar-buttons button,
 .status-bar-buttons .dropdown-button {
-    margin: 0;
     padding: 10px;
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 16px; /* Set the font size */
     color: #333;
     display: flex;
     align-items: center;
@@ -39,7 +34,7 @@
 
 .status-bar-buttons button i,
 .status-bar-buttons .dropdown-button i {
-    font-size: 24px; /* Adjust icon size */
+    font-size: 16px;
 }
 
 /* Dropdown Styles */

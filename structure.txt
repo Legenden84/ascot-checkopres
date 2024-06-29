@@ -1,21 +1,6 @@
 .
 ├── README.md
-├── build
-│   ├── asset-manifest.json
-│   ├── favicon.ico
-│   ├── index.html
-│   ├── logo192.png
-│   ├── logo512.png
-│   ├── manifest.json
-│   ├── robots.txt
-│   └── static
-│       ├── css
-│       │   ├── main.7cd2d993.css
-│       │   └── main.7cd2d993.css.map
-│       └── js
-│           ├── main.dcd919ed.js
-│           ├── main.dcd919ed.js.LICENSE.txt
-│           └── main.dcd919ed.js.map
+├── config-overrides.js
 ├── package-lock.json
 ├── package.json
 ├── public
@@ -25,36 +10,43 @@
 │   ├── logo512.png
 │   ├── manifest.json
 │   └── robots.txt
-└── src
-    ├── App.css
-    ├── App.js
-    ├── actions
-    │   ├── importExcelCsvActions.js
-    │   ├── mainWindowActions.js
-    │   └── statusBarActions.js
-    ├── components
-    │   ├── FileDropzone.css
-    │   ├── FileDropzone.js
-    │   ├── GroupComponent.css
-    │   ├── GroupComponent.js
-    │   ├── MainWindow.css
-    │   ├── MainWindow.js
-    │   ├── Navbar.css
-    │   ├── Navbar.js
-    │   ├── StatusBar.js
-    │   └── styles.css
-    ├── containers
-    │   ├── FileDropzoneContainer.js
-    │   ├── MainWindowContainer.js
-    │   ├── NavbarContainer.js
-    │   └── StatusBarContainer.js
-    ├── index.css
-    ├── index.js
-    ├── reducers
-    │   └── reducers.js
-    ├── store
-    │   └── index.js
-    └── utils
-        └── compareLogic.js
+├── server.js
+├── src
+│   ├── App.css
+│   ├── App.js
+│   ├── actions
+│   │   ├── importExcelCsvActions.js
+│   │   ├── mainWindowActions.js
+│   │   └── statusBarActions.js
+│   ├── components
+│   │   ├── FileDropzone.css
+│   │   ├── FileDropzone.js
+│   │   ├── GroupComponent.css
+│   │   ├── GroupComponent.js
+│   │   ├── MainWindow.css
+│   │   ├── MainWindow.js
+│   │   ├── Navbar.css
+│   │   ├── Navbar.js
+│   │   ├── StatusBar.css
+│   │   ├── StatusBar.js
+│   │   └── styles.css
+│   ├── containers
+│   │   ├── FileDropzoneContainer.js
+│   │   ├── MainWindowContainer.js
+│   │   ├── NavbarContainer.js
+│   │   └── StatusBarContainer.js
+│   ├── index.css
+│   ├── index.js
+│   ├── reducers
+│   │   └── reducers.js
+│   ├── store
+│   │   └── index.js
+│   └── utils
+│       ├── Modal.css
+│       ├── Modal.js
+│       ├── PrintableContent.css
+│       ├── PrintableContent.js
+│       └── compareLogic.js
+└── test.js
 
-12 directories, 45 files
+8 directories, 41 files

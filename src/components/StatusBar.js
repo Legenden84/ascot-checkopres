@@ -44,7 +44,7 @@ class StatusBar extends Component {
     const { properties, filteredData, excelData } = this.props;
 
     return (
-      <div className="status-bar excel-status-bar">
+      <div className="status-bar">
         <div className="status-bar-buttons">
           <div className="dropdown">
             <button className="dropdown-button">
