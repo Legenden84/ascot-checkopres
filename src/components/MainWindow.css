@@ -33,6 +33,7 @@
 }
 
 .table-header {
+    font-family: Arial, Helvetica, sans-serif;
     max-width: 100px;
     background-color: #333;
     color: #fff;
@@ -45,6 +46,7 @@
 }
 
 .table-cell {
+    font-family: Arial, Helvetica, sans-serif;
     max-width: 100px;
     box-sizing: border-box;
     white-space: normal;

@@ -30,6 +30,7 @@
 }
 
 .file-dropzone p {
+    font-family: Arial, Helvetica, sans-serif;
     white-space: normal;
     word-wrap: break-word;
     text-align: center;
