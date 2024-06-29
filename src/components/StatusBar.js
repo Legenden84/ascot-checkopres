@@ -46,6 +46,13 @@ class StatusBar extends Component {
     return (
       <div className="status-bar">
         <div className="status-bar-buttons">
+          <button onClick={this.handleCompareData}>
+            <i className="fas fa-play"></i>
+          </button>
+          <ReactToPrint
+            trigger={() => <button><i className="fas fa-print"></i></button>}
+            content={() => this.printableContentRef.current}
+          />
           <div className="dropdown">
             <button className="dropdown-button">
               <i className="fas fa-sync-alt"></i>
@@ -57,13 +64,6 @@ class StatusBar extends Component {
               </button>
             </div>
           </div>
-          <button onClick={this.handleCompareData}>
-            <i className="fas fa-play"></i>
-          </button>
-          <ReactToPrint
-            trigger={() => <button><i className="fas fa-print"></i></button>}
-            content={() => this.printableContentRef.current}
-          />
         </div>
         <div style={{ display: 'none' }}>
           <PrintableContent ref={this.printableContentRef} filteredData={filteredData} properties={properties} excelData={excelData} />
