@@ -3,6 +3,8 @@
     flex-direction: column;
     width: 100%;
     box-sizing: border-box;
+    margin: 0; /* Ensure no margin */
+    padding: 0; /* Ensure no padding */
 }
 
 .dropzone-status-container {
@@ -10,11 +12,15 @@
     width: 100%;
     align-items: center;
     box-sizing: border-box;
+    margin: 0; /* Ensure no margin */
+    padding: 0; /* Ensure no padding */
 }
 
 .dropzone-container {
     flex: 1;
     box-sizing: border-box;
+    margin: 0; /* Ensure no margin */
+    padding: 0; /* Ensure no padding */
 }
 
 .excel-group .dropzone-container {

@@ -1,5 +1,19 @@
+const characterMappings = {
+    'Ã¶': 'ö',
+    // Add more mappings here as needed
+};
+
+const replaceSpecialCharacters = (str) => {
+    if (typeof str !== 'string') return str;
+    Object.keys(characterMappings).forEach((key) => {
+        str = str.replace(new RegExp(key, 'g'), characterMappings[key]);
+    });
+    return str;
+};
+
 const splitWords = (str) => {
     if (typeof str !== 'string') return [];
+    str = replaceSpecialCharacters(str);
     return str.split(' ').filter(word => word.trim() !== '');
 };
 
@@ -28,22 +42,22 @@ export const matchDateAndName = (filteredData, excelData) => {
             const matchedExcelIndex = updatedExcelEntries.findIndex(excelRow => 
                 excelRow.checkIn === filteredRow.checkIn &&
                 excelRow.checkOut === filteredRow.checkOut &&
-                excelRow.firstname.trim().toLowerCase() === filteredRow.firstname.trim().toLowerCase() &&
-                excelRow.lastname.trim().toLowerCase() === filteredRow.lastname.trim().toLowerCase() &&
-                !excelRow.checked // Ensure that we only match with unchecked rows
+                replaceSpecialCharacters(excelRow.firstname.trim().toLowerCase()) === replaceSpecialCharacters(filteredRow.firstname.trim().toLowerCase()) &&
+                replaceSpecialCharacters(excelRow.lastname.trim().toLowerCase()) === replaceSpecialCharacters(filteredRow.lastname.trim().toLowerCase()) &&
+                !excelRow.checked
             );
 
             if (matchedExcelIndex !== -1) {
                 filteredRow.checked = true;
                 updatedExcelEntries[matchedExcelIndex].checked = true;
             } else {
-                filteredRow.checked = false; // If no match found, ensure it's unchecked
+                filteredRow.checked = false;
             }
 
             return filteredRow;
         });
     });
-    console.log("Updated Excel Entries:", updatedExcelEntries);
+
     return {
         updatedFilteredData,
         updatedExcelEntries
@@ -51,6 +65,16 @@ export const matchDateAndName = (filteredData, excelData) => {
 };
 
 export const matchDateAndNameRelaxed = (excelData, filteredData) => {
+    if (!excelData || !excelData.entries) {
+        console.error('excelData or excelData.entries is undefined');
+        return { updatedFilteredData: filteredData, updatedExcelEntries: [] };
+    }
+
+    if (!filteredData) {
+        console.error('filteredData is undefined');
+        return { updatedFilteredData: {}, updatedExcelEntries: excelData.entries };
+    }
+
     const updatedFilteredData = {};
     const updatedExcelEntries = excelData.entries.map(entry => ({ ...entry }));
 
@@ -59,17 +83,15 @@ export const matchDateAndNameRelaxed = (excelData, filteredData) => {
             if (csvRow.checked) return csvRow;
 
             const csvNameParts = splitWords(csvRow.guests);
-            console.log("csvNameParts:", csvNameParts);
 
             const matchedExcelIndex = updatedExcelEntries.findIndex((excelRow) => {
                 const excelNameParts = splitWords(excelRow.firstname + ' ' + excelRow.lastname);
-                console.log("excelNameParts:", excelNameParts);
                 
                 return (
                     excelRow.checkIn === csvRow.checkIn &&
                     excelRow.checkOut === csvRow.checkOut &&
                     wordsMatch(excelNameParts, csvNameParts) &&
-                    !excelRow.checked // Ensure that we only match with unchecked rows
+                    !excelRow.checked
                 );
             });
 
@@ -82,6 +104,5 @@ export const matchDateAndNameRelaxed = (excelData, filteredData) => {
         });
     });
 
-    console.log("Updated Excel Entries (Relaxed):", updatedExcelEntries);
     return { updatedFilteredData, updatedExcelEntries };
 };

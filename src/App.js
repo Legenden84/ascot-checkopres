@@ -8,7 +8,7 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <div className="app-container">
+        <div className="app-container" style={{ margin: 0, padding: 0 }}>
           {[1, 2, 3, 4].map(fieldIndex => (
             <GroupComponent key={fieldIndex} fileType="csv" fieldIndex={fieldIndex} />
           ))}

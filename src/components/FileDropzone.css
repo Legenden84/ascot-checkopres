@@ -12,6 +12,7 @@
     color: #fff;
     box-sizing: border-box;
     cursor: pointer;
+    margin: 0; /* Ensure no margin */
 }
 
 .file-dropzone-excel {
