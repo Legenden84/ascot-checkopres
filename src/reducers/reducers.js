@@ -13,7 +13,6 @@ const initialState = {
         field2: [],
         field3: [],
         field4: [],
-        field5: [],
     },
     properties: {
         property1: null,
@@ -27,7 +26,6 @@ const initialState = {
         field2: [],
         field3: [],
         field4: [],
-        field5: [],
     },
     isExcelFileUploaded: false,
 };
@@ -127,20 +125,29 @@ const rootReducer = (state = initialState, action) => {
             };
         case RESET_REDUX_STORE:
             return initialState;
-        case COMPARE_DATA_STRICT: {
-            const { updatedFilteredData, updatedExcelEntries } = action.payload;
+        case COMPARE_DATA_STRICT:
+            const updatedFilteredDataStrict = action.payload.updatedFilteredData;
+            const updatedExcelEntriesStrict = action.payload.updatedExcelEntries;
+        
+            const mergedFilteredData = { ...state.filteredData };
+            Object.keys(updatedFilteredDataStrict).forEach((key) => {
+                mergedFilteredData[key] = updatedFilteredDataStrict[key];
+            });
+        
             return {
                 ...state,
-                filteredData: updatedFilteredData,
+                filteredData: mergedFilteredData,
                 excelData: {
-                ...state.excelData,
-                entries: updatedExcelEntries,
+                    ...state.excelData,
+                    entries: updatedExcelEntriesStrict.map((entry, index) => ({
+                        ...entry,
+                        checked: state.excelData.entries[index].checked || entry.checked,
+                    })),
                 },
             };
-        }   
         default:
             return state;
-    }
+        }
 };
 
 export default rootReducer;

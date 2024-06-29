@@ -1,5 +1,3 @@
-// utils/compareLogic.js
-
 const characterMappings = {
     'Ã¶': 'ö',
     'Ã©': 'é',
@@ -25,10 +23,12 @@ const wordsMatch = (excelNameParts, csvNameParts) => {
     const sortedExcelNameParts = excelNameParts.sort().map(word => word.toLowerCase());
     const sortedCsvNameParts = csvNameParts.sort().map(word => word.toLowerCase());
 
+    // Find the shorter and the longer list
     const [shorterList, longerList] = sortedExcelNameParts.length <= sortedCsvNameParts.length
         ? [sortedExcelNameParts, sortedCsvNameParts]
         : [sortedCsvNameParts, sortedExcelNameParts];
 
+    // Check if every word in the shorter list is present in the longer list
     return shorterList.every(word => longerList.includes(word));
 };
 
@@ -44,36 +44,34 @@ export const matchDateAndName = (filteredData, excelData) => {
     }
 
     const updatedFilteredData = { ...filteredData };
-    const updatedExcelEntries = excelData.entries.map(entry => ({ ...entry, checked: false }));
+    const updatedExcelEntries = excelData.entries.map(entry => ({ ...entry }));
 
     Object.keys(filteredData).forEach(fieldKey => {
         updatedFilteredData[fieldKey] = filteredData[fieldKey].map(filteredRow => {
-            if (filteredRow.checked) return filteredRow;
+            if (filteredRow.checked) return filteredRow; // Skip already checked rows in filteredData
 
             const csvNameParts = splitWords(`${filteredRow.firstname} ${filteredRow.lastname}`);
-            const matchedExcelIndex = updatedExcelEntries.findIndex(excelRow => {
-                const excelNameParts = splitWords(`${excelRow.firstname} ${excelRow.lastname}`);
 
+            const matchedExcelIndex = updatedExcelEntries.findIndex(excelRow => {
+                if (excelRow.checked) return false; // Skip already checked rows in excelData
+
+                const excelNameParts = splitWords(`${excelRow.firstname} ${excelRow.lastname}`);
+                
                 return (
                     excelRow.checkIn === filteredRow.checkIn &&
                     excelRow.checkOut === filteredRow.checkOut &&
-                    wordsMatch(excelNameParts, csvNameParts) &&
-                    !excelRow.checked
+                    wordsMatch(excelNameParts, csvNameParts)
                 );
             });
 
             if (matchedExcelIndex !== -1) {
                 filteredRow.checked = true;
                 updatedExcelEntries[matchedExcelIndex].checked = true;
-                console.log(`Match found: Excel Row:`, updatedExcelEntries[matchedExcelIndex], `Filtered Row:`, filteredRow);
             }
 
             return filteredRow;
         });
     });
-
-    console.log('Final Updated Filtered Data:', JSON.stringify(updatedFilteredData, null, 2));
-    console.log('Final Updated Excel Entries:', JSON.stringify(updatedExcelEntries, null, 2));
 
     return {
         updatedFilteredData,

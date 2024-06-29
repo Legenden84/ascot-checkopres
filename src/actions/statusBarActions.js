@@ -18,10 +18,13 @@ export const dispatchMatchDateAndName = () => (dispatch, getState) => {
     const state = getState();
     const { excelData, filteredData } = state;
   
-    const { updatedFilteredData, updatedExcelEntries } = matchDateAndName(filteredData, excelData);
+    Object.keys(filteredData).forEach(fieldKey => {
+      const fieldFilteredData = { [fieldKey]: filteredData[fieldKey] };
+      const result = matchDateAndName(fieldFilteredData, excelData);
   
-    dispatch({
-      type: COMPARE_DATA_STRICT,
-      payload: { updatedFilteredData, updatedExcelEntries },
+      dispatch({
+        type: COMPARE_DATA_STRICT,
+        payload: result,
+      });
     });
   };
