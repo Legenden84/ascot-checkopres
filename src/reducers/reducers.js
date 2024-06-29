@@ -1,7 +1,7 @@
 // import { matchDateAndName, matchDateAndNameRelaxed } from '../utils/compareLogic';
 import { SET_EXCEL_DATA, SET_CSV_DATA } from "../actions/importExcelCsvActions";
 import { UPDATE_EXCEL_CHECKED_STATUS, UPDATE_CSV_CHECKED_STATUS, SAVE_FILTERED_DATA } from "../actions/mainWindowActions";
-import { RESET_CSV_DATA, RESET_REDUX_STORE, COMPARE_DATA_STRICT, COMPARE_DATA_RELAXED } from "../actions/statusBarActions";
+import { RESET_CSV_DATA, RESET_REDUX_STORE, COMPARE_DATA_STRICT } from "../actions/statusBarActions";
 
 const initialState = {
     excelData: {
@@ -13,7 +13,6 @@ const initialState = {
         field2: [],
         field3: [],
         field4: [],
-        field5: [],
     },
     properties: {
         property1: null,
@@ -27,7 +26,6 @@ const initialState = {
         field2: [],
         field3: [],
         field4: [],
-        field5: [],
     },
     isExcelFileUploaded: false,
 };
@@ -128,28 +126,28 @@ const rootReducer = (state = initialState, action) => {
         case RESET_REDUX_STORE:
             return initialState;
         case COMPARE_DATA_STRICT:
-            const { updatedFilteredData: strictFilteredData, updatedExcelEntries: strictExcelEntries } = action.payload;
+            const updatedFilteredDataStrict = action.payload.updatedFilteredData;
+            const updatedExcelEntriesStrict = action.payload.updatedExcelEntries;
+        
+            const mergedFilteredData = { ...state.filteredData };
+            Object.keys(updatedFilteredDataStrict).forEach((key) => {
+                mergedFilteredData[key] = updatedFilteredDataStrict[key];
+            });
+        
             return {
                 ...state,
-                filteredData: strictFilteredData,
+                filteredData: mergedFilteredData,
                 excelData: {
                     ...state.excelData,
-                    entries: strictExcelEntries,
-                }
-            };
-        case COMPARE_DATA_RELAXED:
-            const { updatedFilteredData: comparedFilteredData, updatedExcelEntries: comparedExcelEntries } = action.payload;
-            return {
-                ...state,
-                filteredData: comparedFilteredData,
-                excelData: {
-                    ...state.excelData,
-                    entries: comparedExcelEntries,
-                }
+                    entries: updatedExcelEntriesStrict.map((entry, index) => ({
+                        ...entry,
+                        checked: state.excelData.entries[index].checked || entry.checked,
+                    })),
+                },
             };
         default:
             return state;
-    }
+        }
 };
 
 export default rootReducer;

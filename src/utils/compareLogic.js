@@ -44,23 +44,29 @@ export const matchDateAndName = (filteredData, excelData) => {
     }
 
     const updatedFilteredData = { ...filteredData };
-    const updatedExcelEntries = excelData.entries.map(entry => ({ ...entry, checked: false }));
+    const updatedExcelEntries = excelData.entries.map(entry => ({ ...entry }));
 
     Object.keys(filteredData).forEach(fieldKey => {
         updatedFilteredData[fieldKey] = filteredData[fieldKey].map(filteredRow => {
-            const matchedExcelIndex = updatedExcelEntries.findIndex(excelRow => 
-                excelRow.checkIn === filteredRow.checkIn &&
-                excelRow.checkOut === filteredRow.checkOut &&
-                replaceSpecialCharacters(excelRow.firstname.trim().toLowerCase()) === replaceSpecialCharacters(filteredRow.firstname.trim().toLowerCase()) &&
-                replaceSpecialCharacters(excelRow.lastname.trim().toLowerCase()) === replaceSpecialCharacters(filteredRow.lastname.trim().toLowerCase()) &&
-                !excelRow.checked
-            );
+            if (filteredRow.checked) return filteredRow; // Skip already checked rows in filteredData
+
+            const csvNameParts = splitWords(`${filteredRow.firstname} ${filteredRow.lastname}`);
+
+            const matchedExcelIndex = updatedExcelEntries.findIndex(excelRow => {
+                if (excelRow.checked) return false; // Skip already checked rows in excelData
+
+                const excelNameParts = splitWords(`${excelRow.firstname} ${excelRow.lastname}`);
+                
+                return (
+                    excelRow.checkIn === filteredRow.checkIn &&
+                    excelRow.checkOut === filteredRow.checkOut &&
+                    wordsMatch(excelNameParts, csvNameParts)
+                );
+            });
 
             if (matchedExcelIndex !== -1) {
                 filteredRow.checked = true;
                 updatedExcelEntries[matchedExcelIndex].checked = true;
-            } else {
-                filteredRow.checked = false;
             }
 
             return filteredRow;
@@ -71,47 +77,4 @@ export const matchDateAndName = (filteredData, excelData) => {
         updatedFilteredData,
         updatedExcelEntries
     };
-};
-
-export const matchDateAndNameRelaxed = (excelData, filteredData) => {
-    if (!excelData || !excelData.entries) {
-        console.error('excelData or excelData.entries is undefined');
-        return { updatedFilteredData: filteredData, updatedExcelEntries: [] };
-    }
-
-    if (!filteredData) {
-        console.error('filteredData is undefined');
-        return { updatedFilteredData: {}, updatedExcelEntries: excelData.entries };
-    }
-
-    const updatedFilteredData = {};
-    const updatedExcelEntries = excelData.entries.map(entry => ({ ...entry }));
-
-    Object.keys(filteredData).forEach((fieldKey) => {
-        updatedFilteredData[fieldKey] = filteredData[fieldKey].map((csvRow) => {
-            if (csvRow.checked) return csvRow;
-
-            const csvNameParts = splitWords(csvRow.guests);
-
-            const matchedExcelIndex = updatedExcelEntries.findIndex((excelRow) => {
-                const excelNameParts = splitWords(excelRow.firstname + ' ' + excelRow.lastname);
-                
-                return (
-                    excelRow.checkIn === csvRow.checkIn &&
-                    excelRow.checkOut === csvRow.checkOut &&
-                    wordsMatch(excelNameParts, csvNameParts) &&
-                    !excelRow.checked
-                );
-            });
-
-            if (matchedExcelIndex !== -1) {
-                csvRow.checked = true;
-                updatedExcelEntries[matchedExcelIndex].checked = true;
-            }
-
-            return csvRow;
-        });
-    });
-
-    return { updatedFilteredData, updatedExcelEntries };
 };
