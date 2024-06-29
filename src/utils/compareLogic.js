@@ -19,10 +19,30 @@ const splitWords = (str) => {
     return str.split(' ').filter(word => word.trim() !== '');
 };
 
+// const wordsMatch = (excelNameParts, csvNameParts) => {
+//     const sortedExcelNameParts = excelNameParts.sort().map(word => word.toLowerCase());
+//     const sortedCsvNameParts = csvNameParts.sort().map(word => word.toLowerCase());
+//     return sortedExcelNameParts.every(word => sortedCsvNameParts.includes(word)) && sortedCsvNameParts.every(word => sortedExcelNameParts.includes(word));
+// };
+
 const wordsMatch = (excelNameParts, csvNameParts) => {
     const sortedExcelNameParts = excelNameParts.sort().map(word => word.toLowerCase());
     const sortedCsvNameParts = csvNameParts.sort().map(word => word.toLowerCase());
-    return sortedExcelNameParts.every(word => sortedCsvNameParts.includes(word)) && sortedCsvNameParts.every(word => sortedExcelNameParts.includes(word));
+
+    console.log("sortedCsvNameParts", sortedCsvNameParts)
+    // const targetArray = ["camilla", "hyyppa", "laaksonen", "ville-veikko"];
+    
+    // if (JSON.stringify(sortedCsvNameParts) === JSON.stringify(targetArray)) {
+    //     console.log("SUCCESS");
+    // }
+
+    // Find the shorter and the longer list
+    const [shorterList, longerList] = sortedExcelNameParts.length <= sortedCsvNameParts.length
+        ? [sortedExcelNameParts, sortedCsvNameParts]
+        : [sortedCsvNameParts, sortedExcelNameParts];
+
+    // Check if every word in the shorter list is present in the longer list
+    return shorterList.every(word => longerList.includes(word));
 };
 
 export const matchDateAndName = (filteredData, excelData) => {
