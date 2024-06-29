@@ -1,7 +1,7 @@
 // import { matchDateAndName, matchDateAndNameRelaxed } from '../utils/compareLogic';
 import { SET_EXCEL_DATA, SET_CSV_DATA } from "../actions/importExcelCsvActions";
 import { UPDATE_EXCEL_CHECKED_STATUS, UPDATE_CSV_CHECKED_STATUS, SAVE_FILTERED_DATA } from "../actions/mainWindowActions";
-import { RESET_CSV_DATA, RESET_REDUX_STORE, COMPARE_DATA_STRICT, COMPARE_DATA_RELAXED } from "../actions/statusBarActions";
+import { RESET_CSV_DATA, RESET_REDUX_STORE, COMPARE_DATA_STRICT } from "../actions/statusBarActions";
 
 const initialState = {
     excelData: {
@@ -127,26 +127,17 @@ const rootReducer = (state = initialState, action) => {
             };
         case RESET_REDUX_STORE:
             return initialState;
-        case COMPARE_DATA_STRICT:
-            const { updatedFilteredData: strictFilteredData, updatedExcelEntries: strictExcelEntries } = action.payload;
+        case COMPARE_DATA_STRICT: {
+            const { updatedFilteredData, updatedExcelEntries } = action.payload;
             return {
                 ...state,
-                filteredData: strictFilteredData,
+                filteredData: updatedFilteredData,
                 excelData: {
-                    ...state.excelData,
-                    entries: strictExcelEntries,
-                }
+                ...state.excelData,
+                entries: updatedExcelEntries,
+                },
             };
-        case COMPARE_DATA_RELAXED:
-            const { updatedFilteredData: comparedFilteredData, updatedExcelEntries: comparedExcelEntries } = action.payload;
-            return {
-                ...state,
-                filteredData: comparedFilteredData,
-                excelData: {
-                    ...state.excelData,
-                    entries: comparedExcelEntries,
-                }
-            };
+        }   
         default:
             return state;
     }

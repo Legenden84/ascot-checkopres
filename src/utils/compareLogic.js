@@ -1,3 +1,5 @@
+// utils/compareLogic.js
+
 const characterMappings = {
     'Ã¶': 'ö',
     'Ã©': 'é',
@@ -23,12 +25,10 @@ const wordsMatch = (excelNameParts, csvNameParts) => {
     const sortedExcelNameParts = excelNameParts.sort().map(word => word.toLowerCase());
     const sortedCsvNameParts = csvNameParts.sort().map(word => word.toLowerCase());
 
-    // Find the shorter and the longer list
     const [shorterList, longerList] = sortedExcelNameParts.length <= sortedCsvNameParts.length
         ? [sortedExcelNameParts, sortedCsvNameParts]
         : [sortedCsvNameParts, sortedExcelNameParts];
 
-    // Check if every word in the shorter list is present in the longer list
     return shorterList.every(word => longerList.includes(word));
 };
 
@@ -48,70 +48,35 @@ export const matchDateAndName = (filteredData, excelData) => {
 
     Object.keys(filteredData).forEach(fieldKey => {
         updatedFilteredData[fieldKey] = filteredData[fieldKey].map(filteredRow => {
-            const matchedExcelIndex = updatedExcelEntries.findIndex(excelRow => 
-                excelRow.checkIn === filteredRow.checkIn &&
-                excelRow.checkOut === filteredRow.checkOut &&
-                replaceSpecialCharacters(excelRow.firstname.trim().toLowerCase()) === replaceSpecialCharacters(filteredRow.firstname.trim().toLowerCase()) &&
-                replaceSpecialCharacters(excelRow.lastname.trim().toLowerCase()) === replaceSpecialCharacters(filteredRow.lastname.trim().toLowerCase()) &&
-                !excelRow.checked
-            );
+            if (filteredRow.checked) return filteredRow;
 
-            if (matchedExcelIndex !== -1) {
-                filteredRow.checked = true;
-                updatedExcelEntries[matchedExcelIndex].checked = true;
-            } else {
-                filteredRow.checked = false;
-            }
+            const csvNameParts = splitWords(`${filteredRow.firstname} ${filteredRow.lastname}`);
+            const matchedExcelIndex = updatedExcelEntries.findIndex(excelRow => {
+                const excelNameParts = splitWords(`${excelRow.firstname} ${excelRow.lastname}`);
 
-            return filteredRow;
-        });
-    });
-
-    return {
-        updatedFilteredData,
-        updatedExcelEntries
-    };
-};
-
-export const matchDateAndNameRelaxed = (excelData, filteredData) => {
-    if (!excelData || !excelData.entries) {
-        console.error('excelData or excelData.entries is undefined');
-        return { updatedFilteredData: filteredData, updatedExcelEntries: [] };
-    }
-
-    if (!filteredData) {
-        console.error('filteredData is undefined');
-        return { updatedFilteredData: {}, updatedExcelEntries: excelData.entries };
-    }
-
-    const updatedFilteredData = {};
-    const updatedExcelEntries = excelData.entries.map(entry => ({ ...entry }));
-
-    Object.keys(filteredData).forEach((fieldKey) => {
-        updatedFilteredData[fieldKey] = filteredData[fieldKey].map((csvRow) => {
-            if (csvRow.checked) return csvRow;
-
-            const csvNameParts = splitWords(csvRow.guests);
-
-            const matchedExcelIndex = updatedExcelEntries.findIndex((excelRow) => {
-                const excelNameParts = splitWords(excelRow.firstname + ' ' + excelRow.lastname);
-                
                 return (
-                    excelRow.checkIn === csvRow.checkIn &&
-                    excelRow.checkOut === csvRow.checkOut &&
+                    excelRow.checkIn === filteredRow.checkIn &&
+                    excelRow.checkOut === filteredRow.checkOut &&
                     wordsMatch(excelNameParts, csvNameParts) &&
                     !excelRow.checked
                 );
             });
 
             if (matchedExcelIndex !== -1) {
-                csvRow.checked = true;
+                filteredRow.checked = true;
                 updatedExcelEntries[matchedExcelIndex].checked = true;
+                console.log(`Match found: Excel Row:`, updatedExcelEntries[matchedExcelIndex], `Filtered Row:`, filteredRow);
             }
 
-            return csvRow;
+            return filteredRow;
         });
     });
 
-    return { updatedFilteredData, updatedExcelEntries };
+    console.log('Final Updated Filtered Data:', JSON.stringify(updatedFilteredData, null, 2));
+    console.log('Final Updated Excel Entries:', JSON.stringify(updatedExcelEntries, null, 2));
+
+    return {
+        updatedFilteredData,
+        updatedExcelEntries
+    };
 };
