@@ -33,7 +33,7 @@ class PrintableContent extends Component {
           <td className="table-cell checkin-cell">{row.checkIn}</td>
           <td className="table-cell checkout-cell">{row.checkOut}</td>
           <td className={`table-cell ok-cell ${row.checked ? 'checked' : 'unchecked'}`}>
-            {row.checked ? '✔' : '✘'}
+            {row.checked ? 'OK' : '%'}
           </td>
         </tr>
       ));
