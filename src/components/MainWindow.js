@@ -40,10 +40,10 @@ class MainWindow extends Component {
                             <td className="table-cell checkin-cell">{row.checkIn}</td>
                             <td className="table-cell checkout-cell">{row.checkOut}</td>
                             <td className="table-cell checkbox-cell">
-                                <input 
-                                    type="checkbox" 
-                                    checked={row.checked || false} 
-                                    onChange={this.handleCheckboxChange(index, this.props.fileType)}
+                                <input
+                                    type="checkbox"
+                                    checked={row.checked || false}
+                                    onChange={this.handleCheckboxChange(index, fileType)}
                                 />
                             </td>
                             <td className={`table-cell ok-cell ${row.checked ? 'checked' : 'unchecked'}`}>
@@ -59,11 +59,9 @@ class MainWindow extends Component {
     render() {
         const { entries, fileType } = this.props;
 
-        const sortedEntries = [...entries].sort((a, b) => a.lastname.localeCompare(b.lastname));
-
         return (
             <div className="main-window">
-                {this.renderTable(sortedEntries, fileType)}
+                {this.renderTable(entries, fileType)}
             </div>
         );
     }

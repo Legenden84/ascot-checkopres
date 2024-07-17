@@ -11,6 +11,10 @@ const roomMappings = {
     "HyperNym": ['Deluxe-suite', 'Hypernym Lux', 'Luxury Apart', 'Deluxe-lejli', 'APARTMENT Hy', 'Superior-lej', 'Standard Rat', 'Deluxe-studi', 'Luxury Studi', 'Superior Apa']
 };
 
+const sortEntries = (entries) => {
+    return [...entries].sort((a, b) => a.lastname.localeCompare(b.lastname));
+};
+
 export const setExcelData = (data) => ({
     type: SET_EXCEL_DATA,
     payload: data,
@@ -23,7 +27,7 @@ export const setCsvData = (data, fieldIndex) => ({
 
 export const saveFilteredData = (fieldIndex, data) => ({
     type: SAVE_FILTERED_DATA,
-    payload: { fieldIndex, data }
+    payload: { fieldIndex, data: sortEntries(data) }
 });
 
 const determineProperty = (roomName) => {
@@ -72,7 +76,7 @@ export const dropExcelFile = (file) => (dispatch) => {
 
         dispatch(setExcelData({
             date: formattedDate,
-            entries: entries,
+            entries: sortEntries(entries),
         }));
     };
     reader.readAsArrayBuffer(file);
@@ -125,14 +129,16 @@ export const dropCsvFile = (file, fieldIndex) => (dispatch, getState) => {
             };
         });
 
-        dispatch(setCsvData(filteredData, fieldIndex));
+        const sortedFilteredData = sortEntries(filteredData);
+
+        dispatch(setCsvData(sortedFilteredData, fieldIndex));
 
         // Get the current state to access the excel date
         const state = getState();
         const date = state.excelData.date;
 
         // Filter data based on check-in date
-        const filteredEntries = filteredData
+        const filteredEntries = sortedFilteredData
             .map((row, originalIndex) => ({ ...row, originalIndex }))
             .filter(row => !row.cancelledAt && row.checkIn === date)
             .map(row => ({ ...row, checked: false }));
@@ -199,7 +205,7 @@ function splitName(name) {
     if (!name || typeof name !== 'string') {
         return { firstname: '', lastname: '' };
     }
-    
+
     const cleanedName = name.replace(/,/g, '').trim();
     const parts = cleanedName.split(' ');
 

@@ -4,7 +4,9 @@ const characterMappings = {
     'Ã': 'Å',
     'Ã¸': 'ø',
     'Ã¯': 'ï',
-    'Ã¤': 'ä'
+    'Ã¤': 'ä',
+    'Ã¡': 'á',
+    'Ã': 'Á'
     // Add more mappings here as needed
 };
 
@@ -59,7 +61,7 @@ export const matchDateAndName = (filteredData, excelData) => {
                 if (excelRow.checked) return false; // Skip already checked rows in excelData
 
                 const excelNameParts = splitWords(`${excelRow.firstname} ${excelRow.lastname}`);
-                
+
                 return (
                     excelRow.checkIn === filteredRow.checkIn &&
                     excelRow.checkOut === filteredRow.checkOut &&
