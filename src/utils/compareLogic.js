@@ -6,7 +6,9 @@ const characterMappings = {
     'Ã¯': 'ï',
     'Ã¤': 'ä',
     'Ã¡': 'á',
-    'Ã': 'Á'
+    'Ã': 'Á',
+    'Ã³': 'ó',
+    'Ãº': 'ú'
     // Add more mappings here as needed
 };
 
